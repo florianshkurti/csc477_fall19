@@ -9,7 +9,7 @@
       <arg name="yinit"  default="2.0" />
       <arg name="zinit"  default="0.3" />
       
-      <include file="$(find following_simulator)/launch/spawn_husky.launch">
+      <include file="$(find wall_following_assignment)/launch/spawn_husky.launch">
            <arg name="laser_enabled" value="$(arg laser_enabled)"/>
            <arg name="ur5_enabled" value="$(arg ur5_enabled)"/>
            <arg name="kinect_enabled" value="$(arg kinect_enabled)"/>
@@ -20,7 +20,7 @@
            <arg name="tf_prefix" value="$(arg husky_name)_1"/>
      </include>
 
-     <include file="$(find following_simulator)/launch/teleop.launch">
+     <include file="$(find wall_following_assignment)/launch/teleop.launch">
            <arg name="joy_dev" value="/dev/input/js0"/>
            <arg name="joystick" value="true"/>   
      </include>
@@ -29,5 +29,9 @@
            args="$(arg xinit) $(arg yinit) $(arg zinit) 0 0 0 map $(arg husky_name)_1/odom 100" output="screen" />
 
   </group>
- 
+
+  <!-- This should only be activated if we want the ground truth odometry to be used instead of robot_localization in control.launch -->
+ <node pkg="wall_following_assignment" type="ground_truth_tf_publisher.py" name="wall_following_assignment" output="screen" />
+
+
 </launch>

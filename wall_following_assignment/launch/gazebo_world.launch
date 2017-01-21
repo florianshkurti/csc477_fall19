@@ -5,7 +5,7 @@
   
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find following_simulator)/worlds/$(arg world_name).world"/>
+    <arg name="world_name" value="$(find wall_following_assignment)/worlds/$(arg world_name).world"/>
     <arg name="debug" value="false"/>
     <arg name="paused" value="false"/>
     <arg name="headless" value="$(arg enable_headless)"/>

@@ -1,7 +1,0 @@
-<launch>
-   <include file="$(find following_simulator)/launch/husky_follower.launch" />
-
-   <!-- This should only be activated if we want the ground truth odometry to be used instead of robot_localization in control.launch -->
-   <node pkg="following_simulator" type="ground_truth_tf_publisher.py" name="following_simulator" output="screen" />
-
-</launch>

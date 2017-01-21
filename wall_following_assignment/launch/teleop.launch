@@ -7,7 +7,7 @@
 
   <group ns="joy_teleop">
 
-    <rosparam command="load" file="$(find following_simulator)/resources/$(arg config)" />
+    <rosparam command="load" file="$(find wall_following_assignment)/resources/$(arg config)" />
 
     <node pkg="joy" type="joy_node" name="joy_node">
       <param name="dev" value="$(arg joy_dev)" />

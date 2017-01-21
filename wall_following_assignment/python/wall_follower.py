@@ -8,8 +8,8 @@ import numpy
 import sys
 
 class PID:
-    def __init__(self, kp, Td, Ti, dt):
-        self.kp = kp
+    def __init__(self, Kp, Td, Ti, dt):
+        self.Kp = Kp
         self.Td = Td
         self.Ti = Ti
         self.curr_error = 0
