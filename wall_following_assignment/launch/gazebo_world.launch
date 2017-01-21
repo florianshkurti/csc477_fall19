@@ -1,5 +1,5 @@
 <launch>
-  <arg name="world_name" default="basic"/>
+  <arg name="world_name" default="walls_one_sided"/>
   <arg name="enable_gui" default="true"/>
   <arg name="enable_headless" default="false"/>
   

@@ -38,7 +38,7 @@ if __name__ == '__main__':
     
     rate = rospy.Rate(100)
     received_odometry_to_map = False
-    while not rospy.is_shutdown() and not received_odoms_to_map:
+    while not rospy.is_shutdown() and not received_odometry_to_map:
         try:
             (p_map_odom1, q_map_odom1) = tf_listener.lookupTransform('map', 'husky_1/odom', rospy.Time(0))
             received_odometry_to_map = True
