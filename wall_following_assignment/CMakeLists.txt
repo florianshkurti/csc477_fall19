@@ -105,7 +105,7 @@ generate_messages(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
+  INCLUDE_DIRS include
 #  LIBRARIES wall_following_assignment
 #  CATKIN_DEPENDS cv_bridge geometry_msgs nav_msgs roscpp rospy std_msgs tf
 #  DEPENDS system_lib
@@ -119,6 +119,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 # include_directories(include)
 include_directories(
+  include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -133,16 +134,19 @@ include_directories(
 # add_dependencies(wall_following_assignment ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-# add_executable(wall_following_assignment_node src/wall_following_assignment_node.cpp)
+add_executable(wall_follower_node
+  src/wall_follower_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(wall_following_assignment_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(wall_follower_node
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
+  ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(wall_following_assignment_node
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(wall_follower_node
+  ${catkin_LIBRARIES}
+  )
 
 #############
 ## Install ##
@@ -154,7 +158,7 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 install(PROGRAMS
-   python/main.py
+   python/wall_follower.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
