@@ -92,10 +92,9 @@ if __name__ == "__main__":
     plt.figure()
     plt.plot( X[:, 0], X[:, 1], 'b')
     plt.plot( p_star[0, :], p_star[1, :], 'r')
-
     plt.xlabel('x(t)')
     plt.ylabel('y(t)')
-    
+    plt.legend(['lqr', 'desired'])
     plt.show()
 
 
