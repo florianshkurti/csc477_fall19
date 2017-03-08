@@ -6,8 +6,10 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /TF1
         - /TF1/Frames1
+        - /Marker1
+        - /Marker1/Namespaces1
+        - /Pose1
       Splitter Ratio: 0.5
     Tree Height: 747
   - Class: rviz/Selection
@@ -52,7 +54,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/TF
       Enabled: true
-      Frame Timeout: 15
+      Frame Timeout: 60
       Frames:
         All Enabled: false
         husky_1/base_footprint:
@@ -60,7 +62,7 @@ Visualization Manager:
         husky_1/base_laser:
           Value: true
         husky_1/base_laser_mount:
-          Value: true
+          Value: false
         husky_1/base_link:
           Value: true
         husky_1/front_bumper_link:
@@ -88,9 +90,9 @@ Visualization Manager:
         husky_1/user_rail_link:
           Value: false
         map:
-          Value: false
+          Value: true
         world:
-          Value: false
+          Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
@@ -160,9 +162,9 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 24.7685318
+      Max Intensity: 25.5223217
       Min Color: 0; 0; 0
-      Min Intensity: -5.74369717
+      Min Intensity: 19.1896534
       Name: LaserScan
       Position Transformer: XYZ
       Queue Size: 10
@@ -174,6 +176,38 @@ Visualization Manager:
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
+      Value: true
+    - Alpha: 0.699999988
+      Class: rviz/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic: /husky_1/occupancy_grid
+      Unreliable: false
+      Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /husky_1/debug/laser_points
+      Name: Marker
+      Namespaces:
+        laser_points: true
+      Queue Size: 100
+      Value: true
+    - Alpha: 1
+      Axes Length: 1
+      Axes Radius: 0.100000001
+      Class: rviz/Pose
+      Color: 255; 25; 0
+      Enabled: true
+      Head Length: 1
+      Head Radius: 0.5
+      Name: Pose
+      Shaft Length: 1
+      Shaft Radius: 0.5
+      Shape: Arrow
+      Topic: /husky_1/debug/robot_pose
+      Unreliable: false
       Value: true
   Enabled: true
   Global Options:
@@ -199,22 +233,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.515763581
+      Distance: 64.3686371
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 6.47516012
-        Y: 3.08234692
-        Z: 4.98318386
+        X: 6.82080555
+        Y: 2.18596745
+        Z: -11.6321621
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.535203993
+      Pitch: 1.14979577
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.2072978
+      Yaw: 3.16412115
     Saved: ~
 Window Geometry:
   Displays:
@@ -232,5 +266,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1855
-  X: 75
+  X: 65
   Y: 34
