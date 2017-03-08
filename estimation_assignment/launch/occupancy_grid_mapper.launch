@@ -1,5 +1,10 @@
 <launch>
+   <arg name="odometry_orientation_noise_std_dev"  />
+   <arg name="odometry_position_noise_std_dev"  />
+   
+
    <node pkg="estimation_assignment" type="occupancy_grid_mapper.py" output="screen" name="occupancy_grid_mapper">
-                
+         <param name="odometry_orientation_noise_std_dev" value="$(arg odometry_orientation_noise_std_dev)" />
+         <param name="odometry_position_noise_std_dev" value="$(arg odometry_position_noise_std_dev)" />                
    </node>
 </launch>

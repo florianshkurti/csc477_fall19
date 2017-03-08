@@ -10,6 +10,7 @@ from visualization_msgs.msg import Marker
 from math import sqrt, cos, sin, pi, atan2
 from threading import Thread, Lock
 from math import pi, log, exp
+import random
 import numpy as np
 import sys
 
@@ -71,6 +72,9 @@ class HuskyMapper:
         rospy.init_node('occupancy_grid_mapper', anonymous=True)
         self.tf_listener = tf.TransformListener()
 
+        self.odometry_position_noise_std_dev = rospy.get_param("~odometry_position_noise_std_dev")
+        self.odometry_orientation_noise_std_dev = rospy.get_param("~odometry_orientation_noise_std_dev")
+        
         og_origin_in_map_frame = np.array([-20, -10, 0])
         self.init_log_odds_ratio = 0 #log(0.5/0.5)
         self.ogm = OccupancyGridMap(num_rows, num_cols, meters_per_cell, og_origin_in_map_frame, self.init_log_odds_ratio)
@@ -105,6 +109,12 @@ class HuskyMapper:
         self.mutex.acquire()
         self.odometry = msg
 
+        # Adds noise to the odometry position measurement according to the standard deviations specified as parameters in the launch file
+        # We should have used noisy measurements from the Gazebo simulator, but it is more complicated to configure
+        # so, we add random noise here ourselves, assuming perfect odometry from the simulator. 
+        self.odometry.pose.pose.position.x += random.gauss(0, self.odometry_position_noise_std_dev)
+        self.odometry.pose.pose.position.y += random.gauss(0, self.odometry_position_noise_std_dev)
+        
         #
         # TODO: populate the quaternion from the husky_1/base_link frame to the map frame 
         #       based on the current odometry message. In order to know more about where
@@ -114,11 +124,16 @@ class HuskyMapper:
         #       and map, which is where odometry messages are expressed in. In fact, odometry 
         #       messages from the Husky are transformations from husky_1/base_link to map 
         # 
-        #self.q_map_baselink = np.array([x,
-        #                                y,
-        #                                z,
-        #                                w])
+        #self.q_map_baselink = np.array([x, y, z, w])
 
+        
+        # Corrupting the quaternion with noise in yaw, because we have configured the simulator
+        # to return noiseless orientation measurements.
+        yaw_noise = random.gauss(0, self.odometry_orientation_noise_std_dev) * pi/180.0
+        q_truebaselink_noisybaselink = np.array([0, 0, np.sin(yaw_noise), np.cos(yaw_noise)])
+        self.q_map_baselink = tr.quaternion_multiply(self.q_map_baselink, q_truebaselink_noisybaselink)
+        
+        
         # Computes the rotation matrix from husky_1/base_link to map
         self.R_map_baselink = tr.quaternion_matrix(self.q_map_baselink)[0:3,0:3]
 
@@ -128,9 +143,7 @@ class HuskyMapper:
         #       coordinates based on the current odometry message
         #
         #
-        #self.p_map_baselink = np.array([x,
-        #                                y,
-        #                                z])
+        #self.p_map_baselink = np.array([x, y, z])
 
 
         #
@@ -257,11 +270,11 @@ class HuskyMapper:
         self.robot_pose_pub.publish(ps)
         self.laser_points_marker_pub.publish(pts_marker)
         
-        max_laser_range_in_cells = int(self.max_laser_range / self.ogm.meters_per_cell) + 1 
-
+        
         #
         # This is the main loop in occupancy grid mapping
         #
+        max_laser_range_in_cells = int(self.max_laser_range / self.ogm.meters_per_cell) + 1 
         for delta_row in xrange(-max_laser_range_in_cells, max_laser_range_in_cells):
             for delta_col in xrange(-max_laser_range_in_cells, max_laser_range_in_cells):
                 row = baselaser_row + delta_row
