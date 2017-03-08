@@ -1,0 +1,5 @@
+<launch>
+   <node pkg="estimation_assignment" type="occupancy_grid_mapper.py" output="screen" name="occupancy_grid_mapper">
+                
+   </node>
+</launch>
