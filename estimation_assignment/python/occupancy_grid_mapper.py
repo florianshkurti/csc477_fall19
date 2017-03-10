@@ -85,26 +85,28 @@ class HuskyMapper:
         self.min_laser_angle = None
 
         self.odometry = None
-        self.q_map_baselink = None
-        self.R_map_baselink = None
-        self.p_map_baselink = None
+        
+        self.q_map_baselink = None   # 4x1 quaternion from husky_1/baselink to map frame
+        self.R_map_baselink = None   # 3x3 rotation matrix from husky_1/baselink to map frame
+        self.p_map_baselink = None   # 3x1 position of husky_1/baselink in map frame
 
-        self.q_map_baselaser = None
-        self.R_map_baselaser = None
-        self.p_map_baselaser = None
-                
+        self.q_map_baselaser = None  # 4x1 quaternion from husky_1/baselaser to map frame
+        self.R_map_baselaser = None  # 3x3 rotation matrix from husky_1/baselaser to map frame
+        self.p_map_baselaser = None  # 3x1 position of husky_1/baselaser in map frame
+ 
         self.q_baselink_baselaser = np.array([1.0, 0, 0, 0])
         self.R_baselink_baselaser = tr.quaternion_matrix(self.q_baselink_baselaser)[0:3,0:3]
         self.p_baselink_baselaser = np.array([0.337, 0.0, 0.308])
     
         self.mutex = Lock()
-        
-        self.laser_sub = rospy.Subscriber('/husky_1/scan', LaserScan, self.laser_scan_callback, queue_size=1)
-        self.odometry_sub = rospy.Subscriber('/husky_1/odometry/ground_truth', Odometry, self.odometry_callback, queue_size=1)
+
         self.occupancy_grid_pub = rospy.Publisher('/husky_1/occupancy_grid', OccupancyGrid, queue_size=1)
         self.laser_points_marker_pub = rospy.Publisher('/husky_1/debug/laser_points', Marker, queue_size=1)
         self.robot_pose_pub = rospy.Publisher('/husky_1/debug/robot_pose', PoseStamped, queue_size=1)
 
+        self.laser_sub = rospy.Subscriber('/husky_1/scan', LaserScan, self.laser_scan_callback, queue_size=1)
+        self.odometry_sub = rospy.Subscriber('/husky_1/odometry/ground_truth', Odometry, self.odometry_callback, queue_size=1)
+        
     def odometry_callback(self, msg):
         self.mutex.acquire()
         self.odometry = msg
