@@ -1,0 +1,226 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{datetime}
+\newdate{date}{21}{02}{2017}
+\date{\displaydate{date}}
+
+%opening
+\title{COMP417 Midterm}
+\author{First name:\\
+        Last name:\\
+        Student ID:\\
+         \\
+        Mark: \quad  /35 }
+\begin{document}
+
+\maketitle
+
+\subsubsection*{A. Each of the following questions is worth 1 point}
+1. Adding two rotation matrices always results in another rotation matrix.
+\newline
+True or False?
+\newline
+\newline
+2. Encoders are sensors that measure the discretized angle of a motor. 
+\newline
+True or False?
+\newline
+\newline
+3. The Kinect sensor measures depth based on the principle of time-of-flight. 
+\newline
+True or False?
+\newline
+\newline
+4. Is the transition cost function $g(\textbf{x}, \textbf{u})=\textbf{x}^T\begin{bmatrix}
+                                                                        1 & 0\\
+                                                                        0 & -1
+                                                                       \end{bmatrix}\textbf{x} + \textbf{u}^T\textbf{u}$
+   valid for use in LQR control? Justify your answer.
+\newline
+\newline
+\newline
+\newline
+5. A free-falling accelerometer in a vacuum would measure $9.81m/s^2$. True or False?
+\newline
+\newline
+\newline
+6. A gyroscope measures the angular velocity of a body. True or False?
+\newline
+\newline
+\newline
+7. Pulse-Width Modulation enables almost continuous control of LEDs and motors using a discrete voltage source.   
+True or False?
+\newline
+\newline
+8. The heuristic $h(\textbf{x})=||\textbf{x}-\textbf{x}_\text{goal}||^2$ is an admissible and monotonic heuristic for $A^*$. True or False?
+\newline
+\newline
+9. Dijkstra's shortest path algorithm and $A^*$ always return the exact same path. True or False? 
+\newline
+\newline
+10. If left to perform infinitely many iterations the RRT algorithm will always converge to the shortest path. True or False? 
+\newline
+\newline
+11. The purpose of including the derivative term in the PID is to predict the value of the error in the near future. True or False?
+\newline
+\newline
+12. The best way to start tuning a PID controller is to set the proportional and the derivative gains to zero, and tweak the integral gain. True or False?
+\newline
+\newline
+13. You have a point ${}^B\textbf{p}$ expressed in the coordinates of the body frame $B$. You are also given the rotation matrix ${}^W_B\textbf{R}$ from the body frame, $B$,
+to the world frame, $W$. Finally, you are given the translation vector ${}^W\textbf{t}_{WB}$ which denotes the origin of the body frame with respect to the world frame, 
+expressed in coordinates of the world frame. Show how to express the point above in the world frame $W$.
+\newline
+\newline
+\newline
+14. The following is a valid rotation matrix. True or False? \begin{equation}
+ \begin{bmatrix}
+      2 & 0 & 0 \\
+      0 & 2 & 0 \\
+      0 & 0 & 2
+ \end{bmatrix} \nonumber
+\end{equation}
+\newline
+\newline
+15. A potential field that is the weighted sum of a single repulsive term (due to a single obstacle) and a single attractive term (due to a single destination),
+can never have a local minimum other than at the goal. True or False?
+\newline
+\newline
+16. Name a data structure that can be used for fast nearest neighbour queries.
+\newline
+\newline
+17. Quadtrees and Octrees are balanced trees. True or False?
+\newline
+\newline
+18. Visibility-graph path planning produces shortest paths even in 3D. True or False?
+\newline
+\newline
+19. In $A^*$ once a node gets popped from the priority queue its cost-to-come never gets updated again, but its heuristic value for the cost-to-go can get updated. True or False?
+\newline
+\newline
+20. The matrices $\textbf{A}$ and $\textbf{B}$ in the linear dynamics model $\textbf{x}_{t+1}=\textbf{A}\textbf{x}_t+\textbf{B}\textbf{u}_t$ need to be 
+positive definite if we want to apply LQR. True or False?
+\newline
+\newline
+21. Which planning algorithm would you use for a robot arm with 10 joints? 
+\newline
+(a) RRT with path smoothing
+\newline
+(b) $A^*$ on a discretized grid of the state space.
+\newline
+\newline
+22. $A^*$ can only be used for holonomic systems. True or False?
+\newline
+\newline
+23. Which planning algorithm would you use for a self-driving car?
+\newline
+(a) RRT without path smoothing
+\newline
+(b) $A^*$ on a discretized grid of the state space  with path smoothing
+\newline
+(c) Either of the above
+\newline
+\newline
+24. $A^*$ allows negative costs for the edge weights, but Dijkstra's algorithm does not. True or False?
+\newline
+\newline
+25. $A^*$ with the heuristic $h(\textbf{x})=0$ is Dijkstra's algorithm. True or False? 
+
+
+\subsubsection*{B. Bayesian Updates}
+1. [2pts] Prove Bayes' rule, namely that 
+\begin{equation}
+p(A|B)=\frac{p(B|A)p(A)}{p(B)} \nonumber
+\end{equation}
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+2. [2pts] Prove the conditional Bayes rule, namely that 
+\begin{equation}
+p(A|B,C)=\frac{p(B|A,C)p(A|C)}{p(B|C)} \nonumber
+\end{equation}
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+3. Consider the problem in which a robot is trying to determine if a door is open or not by taking 
+a series of noisy sensor measurements. Assume the door is static over time. Let $m$ be the binary random variable 
+that denotes whether the door is open. The robot's initial belief, before any measurements are obtained, is 
+$p(m=\text{open})=0.5$. The robot's sensor takes binary measurements $z$ of whether the door is open, 
+according to the following sensor model:
+\newline
+\newline
+$p(z=\text{open}\;|\;m=\text{open})=0.8$
+\newline
+$p(z=\text{open}\;|\;m=\text{closed})=0.4$
+\newline
+\newline
+\noindent which does not depend on time. Suppose that the first measurement is $z_1=\text{closed}$ and the second measurement is $z_2=\text{closed}$. 
+\newline
+\newline
+\newline
+(a) [3pts] What is the robot's belief about whether the door is open given the first measurement? 
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+(b) [3pts] What is the robot's belief about whether the door is open given the first two measurements? You may assume
+that measurements are independent given the state of the door.
+\newline
+
+
+
+
+
+   
+
+
+
+
+\end{document}

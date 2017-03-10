@@ -1,0 +1,110 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{datetime}
+\newdate{date}{07}{03}{2017}
+\date{\displaydate{date}}
+
+%opening
+\title{COMP417\\Quiz on Kalman Filter\\Not for marks}
+\begin{document}
+
+\maketitle
+
+\subsubsection*{Notation and algebra}
+1. What does $x_{t+1|t}$ denote? 
+\newline
+(a) $x_{t+1}|x_t$
+\newline
+\textbf{(b)} $x_{t+1}|z_{1:t}, u_{1:t}$
+\newline
+\newline
+2. Suppose the 1D random variable $x$ has variance $\sigma_x^2=10$. Then the random variable $z=3x+1$ has variance:
+\newline
+\textbf{(a)} $\sigma_z^2=90$
+\newline
+(b) $\sigma_z^2=30$
+\newline
+(c) $\sigma_z^2=31$
+\newline
+\newline
+3. Suppose the 1D random variable $x$ has mean $\mu_x=10$. Then the random variable $z=3x+1$ has mean:
+\newline
+(a) $\mu_z=90$
+\newline
+(b) $\mu_z=30$
+\newline
+\textbf{(c)} $\mu_z=31$
+\newline
+\newline
+4. Suppose the 2D random variable $\textbf{x}$ has covariance matrix $\boldsymbol{\Sigma}_x$. Then the covariance matrix of the random variable $\textbf{z}=\textbf{A}\boldsymbol{x} + \textbf{b}$, where $\textbf{b}$ is a 
+constant vector is:
+\newline
+(a) $\boldsymbol{\Sigma}_z=\textbf{A}\boldsymbol{\Sigma}_x + \textbf{b}$ 
+\newline
+(b) $\boldsymbol{\Sigma}_z=\textbf{A}\boldsymbol{\Sigma}_x\textbf{A}^T + \textbf{b}$ 
+\newline
+\textbf{(c)} $\boldsymbol{\Sigma}_z=\textbf{A}\boldsymbol{\Sigma}_x\textbf{A}^T$ 
+\newline
+(d) None of the above
+\newline
+\newline
+5. Suppose the 2D random variable $\textbf{x}$ has mean $\boldsymbol{\mu}_x$. Then the mean of the random variable $\textbf{z}=\textbf{A}\boldsymbol{x} + \textbf{b}$, where $\textbf{b}$ is a 
+constant vector is:
+\newline
+\textbf{(a)} $\boldsymbol{\mu}_z=\textbf{A}\boldsymbol{\mu}_x + \textbf{b}$ 
+\newline
+(b) $\boldsymbol{\mu}_z=\textbf{A}\boldsymbol{\mu}_x\textbf{A}^T + \textbf{b}$ 
+\newline
+(c) $\boldsymbol{\mu}_z=\textbf{A}\boldsymbol{\mu}_x\textbf{A}^T$ 
+\newline
+(d) None of the above
+\newline
+\newline
+
+
+\subsubsection*{Kalman Filter}
+6. Applying Bayes' rule with a Gaussian prior and a Gaussian measurement likelihood always results in a Gaussian posterior. \textbf{True} or False?
+\newline
+\newline
+7. The propagation step of the Kalman Filter reduces the uncertainty of the state estimate. True or \textbf{False}?
+\newline
+\newline
+8. The update step of the Kalman Filter increases the variance/covariance of the Gaussian state estimate. True or \textbf{False}?
+\newline
+\newline
+9. Suppose your prior distribution for a 1D random variable is $x\sim \mathcal{N}(0,10^2)$. Your measurement likelihood of $x$ is $z|x \sim \mathcal{N}(10, 1^2)$, where $z=x+w, \quad w\sim\mathcal{N}(0,1^2)$.
+In other words, initially you thought $x$ was around $0$ with variance $10^2$, but then you got a noisy measurement around $10$ with variance $1$. Which of the following statements are true about the posterior 
+distribution $x|z\sim\mathcal{N}(\mu, \sigma^2)$, i.e your updated belief?
+\newline
+\newline
+\textbf{(a)} $\mu$ is closer to 10 than to 1.
+\newline
+(b) $\mu=0.5$
+\newline
+(c) $\sigma < \text{min}(10, 1)$
+\newline
+(d) $\sigma > \text{max}(10, 1)$
+\newline
+(e) $\sigma = 4.5$
+\newline
+\newline
+10. Suppose the measurement model of a system is a linear function of the state plus noise: $\textbf{z}=\textbf{H}\textbf{x} + \textbf{n}$. 
+If the difference between the expected measurement $\textbf{H}\boldsymbol{\mu}_x$ and the actual measurement $\bar{\textbf{z}}$ is zero, then 
+the update step of the Kalman Filter will:
+\newline
+(a) Change the mean but not the variance
+\newline
+\textbf{(b)} Change the variance but not the mean
+\newline
+(c) Change neither the variance nor the mean
+\newline
+(d) Change both
+\newline
+\newline
+11. The Kalman Filter is a good choice for problems where the distribution of your state estimate can be multimodal, i.e. in cases where there are multiple hypotheses
+that are equally likely, or more generally, multiple local maxima in the posterior distribution. True or \textbf{False}?
+
+\end{document}
