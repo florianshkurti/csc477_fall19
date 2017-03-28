@@ -66,7 +66,7 @@ class ParticleFilter(object):
                 yrand = np.random.uniform(ymin*0.9, ymax*0.9)
                 row, col = self.metric_to_grid_coords(xrand, yrand)
                 if self.grid_bin[row, col]:
-                    theta = 0
+                    theta = np.random.uniform(0, 2*pi)
                     self.particles.append(Particle(i, xrand, yrand, theta))
                     found = True
                 

@@ -5,40 +5,13 @@
 \usepackage{graphicx}
 
 %opening
-\title{COMP417: Assignment 3\\Due Friday, March 24  at 6pm}
+\title{COMP417: Assignment 4\\Due Sunday, April 10  at 6pm}
 \author{}
 
 \begin{document}
 
 \maketitle
 
-
-\section{Occupancy grid mapping (5pts)}
-In this exercise you are going to implement parts of the occupancy grid mapping system discussed in class. In particular, you are going to map an environment 
-based on known odometry estimates and known 2D laser scans. Do \path{git} $\;$ \path{pull} under your comp417 repository to get the starter code. The functionality 
-that you need to implement is marked using to-do comments in the file \path{estimation_assignment/python/occupancy_grid_mapper.py}. To run your code, 
-\path{cd} $\;$ \path{path/to/comp417/estimation_assignment/} and execute the following commands on three different terminals: 
-\newline
-
-  \path{rosbag} $\;$ \path{play} $\;$ \path{laser_and_odometry.bag}
-  
-  \path{roslaunch} $\;$ \path{estimation_assignment} $\;$ \path{occupancy_grid_mapping.launch} $\;$ \path{odometry_orientation_noise_std_dev:=2.5} $\;$ \path{odometry_position_noise_std_dev:=0.1}
-  
-  \path{rosrun} $\;$ \path{rviz} $\;$ \path{rviz} 
-\newline
-\newline
-\noindent When rviz initializes, go to \path{File} $>$ \path{Open Config} and then load the configuration file in \path{estimation_assignment/resources/comp417.rviz}
-which is going to start the visualization of laser scan messages, frames of reference, and debugging visualizations. Save this configuration file as the default
-in your \path{/home/username/.rviz/default.rviz}, so you won't have to do this every time you restart rviz. In the \path{roslaunch} command given above, the standard deviation of 
-the odometry orientation noise is given in degrees. In this example the true yaw of the robot is corrupted by random noise from $\mathcal{N}(0, 2.5^2)$. Similarly, the true position 
-is corrupted by random noise from $\mathcal{N}(0, 0.1^2)$, which is expressed in meters. \path{laser_and_odometry.bag} is a recording of laser scans and odometry data in the environment 
-you used in Assignment 1. The expected result for perfect odometry looks similar to Figure \ref{fig:gmapping}. 
-\newline
-\newline
-\newline
-\noindent What you need to submit: 5 images of maps produced by your mapper, with noise parameters (0, 0), (2.5, 0), (5, 0), (2.5, 0.1), (5, 0.1) respectively. 
-Your images should be named \path{map_[0|1|2|3|4]_firstname_lastname.png}. Also, submit a video recording of the rviz visualization for the odometry noise combination (0,0),
-demonstrating your map being built from beginning to end. Your video should be named \path{map_0_firstname_lastname.mp4/avi/ogg}. 
 
 \section{Depth from stereo disparity (6.25pts)}
 In this exercise you are going to solve the depth from stereo disparity problem that we discussed in class. You will be given pairs of stereo-rectified images from the 
@@ -163,7 +136,8 @@ metric for matching patches along the horizontal epipolar lines. The most common
   \label{fig:results}
 \end{figure}
 \subsubsection{Starter code}
-\noindent You are given starter code in your comp417 repository under \path{estimation_and_vision_assignment/python/stereo_disparity_map.py}. The way to run this code is:
+\noindent You are given starter code in your comp417 repository under \path{estimation_and_vision_assignment/python/stereo_disparity_map.py}. Do \path{git} $\;$ \path{pull} to 
+from your comp417 repository in order to receive it. The way to run this code is:
 \newline
 \newline
 \path{./stereo_disparity_map.py} $\;$ \path{../latex/stereo_images/images0/kitti_1_left.png} $\;$ \path{../latex/stereo_images/images1/kitti_1_right.png} $\;$ \path{../resources/kitti.yaml}
@@ -182,9 +156,46 @@ Your implementation of disparity and depth estimation in \path{estimation_and_vi
 Try to use GPU acceleration to make your stereo block matching code run closer to real-time. For the size of these image pairs for example, it could be made to run closer to 1 sec
 with a good implementation and on a modern GPU. 
 
+\section{Monte Carlo Localization (6.25pts)}
+In this exercise you are going to implement Monte Carlo Localization (i.e. localization in a known occupancy grid map, using particle filters), as discussed in class. Your robot
+is going to start by being completely lost in the environment, so particles are going to be spread out uniformly at random in the world. Then, after many
+measurements, its position is going to be constrained and the particles are going to converge to a small cluster. The main mechanism for survival of the fittest among particles
+will be: which particles are more likely to have generated the laser scans that the robot is observing now?
+
+
+
+\subsubsection{Starter code}
+Do \path{git} $\;$ \path{pull} under your comp417 repository to get the starter code. The functionality that you need to implement is marked using comments in the file 
+\path{estimation_and_vision_assignment/python/monte_carlo_localization.py}. To run your code, \path{cd} $\;$ \path{path/to/comp417/estimation_and_vision_assignment/} and 
+execute the following commands on three different terminals: 
+\newline
+
+  \path{rosbag} $\;$ \path{play} $\;$ \path{laser_controls_and_odometry.bag}
+  
+  \path{roslaunch} $\;$ \path{estimation_and_vision_assignment} $\;$ \path{monte_carlo_localization.launch}
+  
+  \path{rosrun} $\;$ \path{rviz} $\;$ \path{rviz} 
+\newline
+\newline
+\noindent When rviz initializes, go to \path{File} $>$ \path{Open Config} and then load the configuration file in \path{estimation_and_vision_assignment/resources/comp417.rviz}
+which is going to start the visualization of laser scan messages, frames of reference, and particles. Save this configuration file as the default
+in your \path{/home/username/.rviz/default.rviz}, so you won't have to do this every time you restart rviz. What you will see initially, before the robot makes any measurements 
+is the following:
+\begin{figure}[h!]
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{results/mcl_init}
+   \end{center}
+   \caption{Uniform initialization of particles in Monte Carlo Localization, within the boundaries of a workspace. Your task is to make the particles cluster around the robot.}
+\end{figure}
+\newline
+\newline
+\newline
+\noindent What you need to submit: in addition to your code, a video recording of the rviz visualization demonstrating your particles converging from beginning to end. Your video 
+should be named \path{mcl_firstname_lastname.mp4/avi/ogg}. 
+
 
 \section{How to submit}
-Submit all your work in a file called \path{estimation_assignment.zip} that contains your extensions to the provided starter code, as well as the five images, the video, and the pdf file. 
+Submit all your work in a file called \path{estimation_and_vision_assignment.zip} that contains your extensions to the provided starter code, as well as the 14 images and the video. 
 Submissions will be done on myCourses. 
 
 \section{A note on indentation}
