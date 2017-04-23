@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<title>MRL Reading Group: 2016</title>
+
+<!-- Bootstrap -->
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/bootstrap-theme.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+</head>
+<body>
+
+
+<div class="container theme-showcase" role="main">
+    <div class="page-header">
+        <h1>Summer/Fall 2016: Deep Learning in Robotics</h1>
+    </div>
+    <div class="row">
+        <p class="lead">We aim to study current literature on generative models, variational inference, and deep reinforcement learning. We are interested in inference in order to make it possible to perform feedback control based on raw pixels, as well as try to plan in the space of latent variables.</p>
+        <p class="lead">Unless otherwise noted in the list below, all of our meetings will take places in the <b>Zames room (MC 437)</b> at <b>16:00pm</b> on 
+        <b>Wednesdays</b>.</p>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Title</th>
+                        <th>Presenter</th>
+                        <th>Slides/Useful Links/Additional Material</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>July 8th</td>
+                        <td>
+                            <i><a href="https://arxiv.org/abs/1602.02867">Value Iteration Networks</a></i><br>
+		            Aviv Tamar, Yi Wu, Garrett Thomas, Sergey Levine, Pieter Abbeel 
+                        </td>
+                        <td>Jean Harb</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>July 15</td>
+                        <td>
+                            <i><a href="http://mi.eng.cam.ac.uk/projects/relocalisation/">Modelling Uncertainty in Deep Learning for Camera Relocalization</a></i><br>
+                            Alex Kendall, Roberto Cipolla
+                            
+                        </td>
+                        <td> Juan Camilo Gamboa Higuera </td>
+                        <td></td>
+                    </tr>
+	            <tr>
+                        <td>3</td>
+                        <td>July 22</td>
+                        <td>
+                            <i><a href="https://arxiv.org/pdf/1605.07148v3.pdf">Backprop KF: Learning Discriminative Deterministic State Estimators</a></i><br>
+                            Tuomas Haarnoja, Anurag Ajay, Sergey Levine, Pieter Abbeel
+                            
+                        </td>
+                        <td> Florian Shkurti </td>
+                        <td></td>
+                    </tr>
+	      
+                    <tr>
+                        <td>4</td>
+                        <td>July 29</td>
+                        <td>
+                            <i><a href="https://arxiv.org/abs/1506.02142">Dropout as a Bayesian Approximation: Representing Model Uncertainty in Deep Learning</a></i><br>
+                            Yarin Gal, Zoubin Ghahramani
+                        </td>
+                        <td> David Meger </td>
+                        <td></td>
+                    </tr>
+	      
+                    <tr>
+                        <td>5</td>
+                        <td>August 5</td>
+                        <td>
+                            <i><a href="http://datta.hms.harvard.edu/documents/23.pdf">Structured VAEs: Composing Probabilistic Graphical Models and Variational Autoencoders</a></i><br>
+                            Matthew Johnson, David Duvenaud, Alexander Wiltschko, Sandeep Datta, Ryan Adams
+                        </td>
+                        <td> Arnold Kalmbach </td>
+                        <td></td>
+                    </tr>
+ 
+	            <tr>
+                        <td>6</td>
+                        <td>September 22</td>
+                        <td>
+                            <i><a href="https://arxiv.org/abs/1312.6114">Auto-encoding variational Bayes</a></i><br>
+                            Dirk Kingma, Max Welling
+                        </td>
+                        <td> Florian Shkurti </td>
+                        <td><a href="slides/aevb.pdf">Slides</a>, <a href="supporting/blei_vi.pdf">VI Tutorial</a></td>
+                    </tr>
+ 
+	            <tr>
+                        <td>7</td>
+                        <td>October 12</td>
+                        <td>
+                            <i><a href="https://arxiv.org/abs/1504.00702">End-to-End Training of Deep Visuomotor Policies</a></i><br>
+                            Sergey Levine, Chelsea Finn, Trevor Darrell, Pieter Abbeel
+                        </td>
+                        <td> Peter Henderson </td>
+                        <td></td>
+                    </tr>
+	             
+                    <tr>
+                        <td>8</td>
+                        <td>October 19</td>
+                        <td>
+                            <i><a href="http://hi.cs.waseda.ac.jp/~esimo/en/research/deepdesc/">Discriminative Learning of Deep Convolutional Feature Point Descriptors</a></i><br>
+                            Edgar Simo-Serra, Eduard Trulls, Luis Ferraz, Iasonas Kokkinos, Pascal Fua, Francesc Moreno-Noguer
+                        </td>
+                        <td> Johanna Hansen </td>
+                        <td></td>
+                    </tr>
+	            
+                    <tr>
+                        <td>9</td>
+                        <td>October 26</td>
+                        <td>
+                            <i><a href="https://arxiv.org/abs/1606.03657">InfoGAN: Interpretable Representation Learning by Information Maximizing Generative Adversarial Nets</a></i><br>
+                            Xi Chen, Yan Duan, Rein Houthooft, John Schulman, Ilya Sutskever, Pieter Abbeel
+                        </td>
+                        <td> Juan Camilo Gamboa Higuera </td>
+                        <td></td>
+                    </tr>
+   
+                    <tr>
+                        <td>10</td>
+                        <td>November 9</td>
+                        <td>
+                            <i><a href="http://openreview.net/pdf?id=SJDaqqveg">An actor-critic algorithm for sequence prediction</a></i><br>
+                            Dzmitry Bahdanau, Philemon Brakel, Kelvin Xu, Anirudh Goyal, Ryan Lowe Joelle Pineau, Aaron Courville, Yoshua Bengio
+                        </td>
+                        <td> Ryan Lowe </td>
+                        <td></td>
+                    </tr>
+     
+	            <tr>
+                        <td>11</td>
+                        <td>November 16</td>
+                        <td>
+                            <i><a href="https://arxiv.org/abs/1602.07360">SqueezeNet: AlexNet-level accuracy with 50x fewer parameters and 0.5 MB model size</a></i><br>
+		           Forrest Iandola, Song Han, Matthew Moskewicz, Khalid Ashraf, William Dally, Kurt Keutzer
+                        </td>
+                        <td> Andrew Holliday </td>
+                        <td><a href="slides/SqueezeNet.pdf">Slides</a></td>
+                    </tr>
+     
+	            <tr>
+                        <td>12</td>
+                        <td>November 23</td>
+                        <td>
+                            <i>TODO</i><br>
+		           TODO
+                        </td>
+                        <td> Juan Camilo Gamboa Higuera </td>
+                        <td>TODO</td>
+                    </tr>
+
+	            <tr>
+                        <td>13</td>
+                        <td>November 30</td>
+                        <td>
+                            <i><a href="https://arxiv.org/abs/1506.01497">Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks</a></i><br>
+		           Shaoqing Ren, Kaiming He, Ross Girshick, Jian Sun
+                        </td>
+                        <td> Anqi Xu </td>
+                        <td><a href="slides/faster_rcnn_reading_group.pdf">Slides</a></td>
+                    </tr>
+     
+     
+
+                </tbody>
+            </table>
+        </div>
+        <div class="page-header">
+            <h1><a href="./DeepLearningInRoboticsReadingGroup.pdf">Backlog of relevant papers</a></h1>
+        </div>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="../js/bootstrap.min.js"></script>
+        </body>
+        </html>

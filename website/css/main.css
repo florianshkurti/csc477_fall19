@@ -1,0 +1,81 @@
+.ts {
+    float: left;
+    padding-right: 14%;
+    font-size: 16px;
+}
+
+h1 {
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline; }
+
+h3 {
+  color: #222;
+}
+
+.page-header {
+    color: #222;
+    font: 700 32px/34px "Libre Baskerville";
+    letter-spacing: -1px;
+    margin: 0px 0 0 0;
+}
+
+#ov {
+    padding-bottom: 1%;
+    font: inherit;
+    font-size: 16px;
+
+}
+
+#dts {
+    display: block;
+}
+
+.host {
+    clear: both;
+    padding-bottom: 5%;
+    padding-top: 1%
+}
+
+#cd {
+    clear: both;
+    font: 'PT Serif', serif;
+    padding-bottom: 5%;
+    font-size: 16px;
+}
+
+#cd li {
+    padding-bottom: 1%;
+}
+
+#pic1 {
+    float: left;
+    padding-right: 60%;
+}
+
+#pic2 {
+    float: left;
+    width: 19%;
+}
+
+.imgs {
+    clear: both; 
+}
+
+.row {
+    clear: both;
+}
+
+.rt, .ms, .rc {
+    padding-top: 3%;
+}
+
+#day {
+    width: 7%;
+}
+
+.rdg {
+    width: 17%; 
+}
