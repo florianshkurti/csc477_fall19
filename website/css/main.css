@@ -1,7 +1,17 @@
+html {
+    border: 0;
+    margin: 0;
+}
+
 .ts {
     float: left;
-    padding-right: 14%;
-    font-size: 16px;
+    padding-right: 10%;
+   
+}
+
+
+#dts {
+    display: block;
 }
 
 h1 {
@@ -29,10 +39,6 @@ h3 {
 
 }
 
-#dts {
-    display: block;
-}
-
 .host {
     clear: both;
     padding-bottom: 5%;
@@ -50,18 +56,29 @@ h3 {
     padding-bottom: 1%;
 }
 
-#pic1 {
-    float: left;
-    padding-right: 60%;
+
+img {
+  width: 70%;
+  height: auto;
+  vertical-align: middle;
 }
 
-#pic2 {
+#pic1 {
     float: left;
-    width: 19%;
+    padding-right: 50%;
+    flex: 0.7477;
+}
+
+#pic2  {
+    flex: 1.025;
 }
 
 .imgs {
-    clear: both; 
+    clear: both;
+    display: flex;
+    padding-bottom: 5%; 
+    padding-top: 5%; 
+    
 }
 
 .row {
