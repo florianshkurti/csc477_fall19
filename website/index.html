@@ -5,7 +5,7 @@
 <!--meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1"-->
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-<title>COMP417, McGill</title>
+<title>CSC417</title>
 
 <!-- Bootstrap -->
 <link href="./css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -20,7 +20,7 @@
 
 <div class="container theme-showcase" role="main">
     <div class="page-header">
-        <h1>COMP417: Intro to Robotics and Intelligent Systems, Winter 2017</h1>
+        <h1>CSC477: Introduction to Mobile Robotics, Fall 2019</h1>
     </div>
 
     <div class="imgs">
@@ -45,35 +45,33 @@
       </div>
 
       
-      <h3>Teaching Staff</h3>
+      <h3>Course Details</h3>
       <div id="dts">
         <div class="ts">
         <div>Instructor</div>
-        <div><a href="http://www.cim.mcgill.ca/~florian">Florian Shkurti</a></div>
-        <div>florian@X</div>
-        <div>Office: McConnell 403</div>
-        <div>Office Hours: Thu 10:30-11:30am</div>
+        <div><a href="http://www.cs.toronto.edu/~florian">Florian Shkurti</a></div>
+        <div>x@cs.toronto.edu, x=florian</div>
+        <div>Office: DH3066, UTM</div>
+        <div>Office Hours: Mon 3:00-4:00pm</div>
         </div>
 
         <div class="ts">
         <div>Teaching Assistant</div>
-        <div><a href="http://www.cim.mcgill.ca/~akalmbach">Arnold Kalmbach</a></div>
-        <div>akalmbach@X</div>
-        <div>Office: McConnell 403</div>
-        <div>Office Hours: Wed 3-4pm</div>
+        <div>Nan Liang</div>
+        <div>y@mail.utoronto.ca, y=nan.liang</div>
+        <div>Office: TBA</div>
+        <div>Office Hours: TBA</div>
         </div>
 
         <div class="ts">
-        <div>Teaching Assistant</div>
-        <div><a href="http://martingerdzhev.com/">Martin Gerdzhev</a></div>
-        <div>martin.gerdzhev@Y</div>
-        <div>Office: McConnell 111</div>
-        <div>Office Hours: Mon 1-2pm</div>
+        <div>Lectures: Thursdays, DH4001, UTM, 5-7pm</div>
+        <div>Tutorials and Practicals: Wednesdays, DH2020, UTM, 1-2pm</div>
         </div>
-          
+
         <div class="host">
-          X = cim.mcgill.ca, Y = mail.mcgill.ca
-        </div>  
+          
+        </div> 
+ 
       </div>
             
       
@@ -96,9 +94,6 @@
 
         <li>The Geometry of Computer Vision: how can modeling pixel projections on an RGB camera help us infer the 3D structure of the world? How can we triangulate
           points seen from two cameras? How can we estimate the camera’s pose (and therefore the robot’s) while it is moving in the environment?</li>
-
-        <li>(Intro to) Reinforcement Learning: how can we learn the parameters of a state-dependent controller without having a prior physical model of
-        the robot’s dynamics? This is an enormous research field, with many exciting results. In this course we will only have time to see two algorithms.</li>
       </ul>  
       </div>
       
@@ -109,398 +104,308 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Lecture</th>
+                        <th>Week</th>
                         <th>Date</th>
                         <th>Topics</th>
                         <th>Tutorial</th>
                         <th>Slides</th>
-                        <th>Readings</th>
+                        <th>Reading</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>1</td>
-                        <td id="day">Jan 5</td>
+                        <td id="day">Sep 5</td>
                         <td>
                           <b>Introduction</b><br/>
                           Motivation, logistics, rough description of assignments, sense-plan-act paradigm.<br/> 
-		            <a href="./CourseOutline.pdf">Syllabus</a>, <a href="./quizzes/quiz0.pdf">Quiz 0 (Introduction, Background, Expectations)</a> 
+		          <a href="./CourseOutline.pdf">Syllabus</a>, <a href="./quizzes/quiz0.pdf">Quiz 0 (Introduction, Background, Expectations)</a><br/><br/>
+
+                          <b>Sensors and Actuators</b><br>
+                          Camera, LiDAR, tactile, IMU, depth, GPS, Hall-effect sensors, encoders, RGBD. Pulse-Width Modulation. Motors.
+                          
+                          <br/><br/>
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>No tutorial</td>
+                        <td><br/><br/><br/><br/><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture4_Sensors_and_Actuators.pdf">pdf</a>,
+                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture4_Sensors_and_Actuators.pptx">pptx</a></td>
+                        <td>Dudek & Jenkin 3.1.1,4, 3.2-3, 4.1-8, 4.10, 5.1.1<br/>
+                          Optional: <a href="http://www.cim.mcgill.ca/%7Elanger/558/1-imageprojection.pdf">Mike Langer's notes</a><br/></td>
                     </tr>
                     <tr>
                         <td>2</td>
-                        <td>Jan 10</td>
+                        <td>Sep 12</td>
                         <td>
-                            <b>Dynamics (lecture given by <a href="http://martingerdzhev.com/index.php/research/">Martin Gerdzhev</a>)</b><br>
-                            Dynamical systems and control. Examples: Dubins car, differential
-                            drive car, unicycle, pendulum, cartpole, quadcopter. Holonomic vs. non-holonomic systems.
-                            
+                          <b>Kinematics</b><br>
+                          Frames of reference. Rotation representations. Homogeneous coordinates and transformations. Rigid body motion.<br/><br/>
+                          
+                          <b>Dynamics</b><br>
+                          Dynamical systems and control. Examples: Dubins car, differential
+                          drive car, unicycle, pendulum, cartpole, quadcopter. Holonomic vs. non-holonomic systems.<br><br>
+
+                          <b>Function Approximation</b><br>
+                          <br/><br/>
                         </td>
-                        <td></td>
+                        <td><a href="./tutorials/ROSintro.pdf">Intro to ROS</a></td>
                         <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture2_Dynamics_and_Kinematics.pdf">pdf</a>,
-                          <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture2_Dynamics_and_Kinematics.pptx">pptx</a></td>
-                        <td class="rdg"><a href="http://msl.cs.uiuc.edu/planning/node657.html">Lavalle 13.1</a><br/>
-                                        Dudek & Jenkin 3.1.5,6<br/>
+                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture2_Dynamics_and_Kinematics.pptx">pptx</a><br/><br/><br/><br/>
+                            
+                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture3_Dynamics_and_Kinematics.pdf">pdf</a>,
+                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture3_Dynamics_and_Kinematics.pptx">pptx</a>
+                            <br/><br/>
+                            
+                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture22_Function_Approximation.pdf">pdf</a>,
+                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture22_Function_Approximation.pptx">pptx</a>
+                        </td>
+                        
+                        <td class="rdg">
+                          <a href="http://paulfurgale.info/news/2014/6/9/representing-robot-pose-the-good-the-bad-and-the-ugly">Paul Furgale: robot pose</a><br/>
+                          <a href="http://msl.cs.uiuc.edu/planning/node657.html">Lavalle 13.1</a><br/>
+                          Dudek & Jenkin 3.1.5,6<br/>
                         </td>
                         
                     </tr>
 	            <tr>
                         <td>3</td>
-                        <td>Jan 12</td>
+                        <td>Sep 19</td>
                         <td>
-                          <b>Kinematics (lecture given by <a href="http://martingerdzhev.com/index.php/research/">Martin Gerdzhev</a>)</b><br>
-                            Frames of reference. Rotation representations. Homogeneous coordinates and transformations. Rigid body motion.
+                          <b>PID Control</b><br>
+                          Tuning, cascading PID, advantages and drawbacks.<br/><br/>
+
+                          <b>Artificial Potential Fields and Obstacle Avoidance</b><br>
+                          Implementation issues, navigation functions. Vector-field histogram (VFH), dynamic window approach (DWA).
+                          <br/><br/>
                         </td>
-                        <td><a href="./tutorials/ROSintro.pdf">Intro to ROS</a></td>
-                        <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture3_Dynamics_and_Kinematics.pdf">pdf</a>,
-                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture3_Dynamics_and_Kinematics.pptx">pptx</a></td>
-                        <td><a href="http://paulfurgale.info/news/2014/6/9/representing-robot-pose-the-good-the-bad-and-the-ugly">Paul Furgale: robot pose</a><br/></td>
+                        <td><a href="./tutorials/LinearAlgebraRefresher.pdf">Linear algebra refresher</a></td>
+                        <td>
+                          <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture5_PID_Control.pdf">pdf</a>,
+                          <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture5_PID_Control.pptx">pptx</a><br/><br/><br/><br/>
+                          
+                          <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture6_Potential_Fields_And_Obstacle_Avoidance.pdf">pdf</a>,
+                          <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture6_Potential_Fields_And_Obstacle_Avoidance.pptx">pptx</a>
+                        </td>
+                        <td>Optional: <a href="https://www.amazon.com/Automatic-Tuning-Controllers-Karl-Astrom/dp/1556170815">Astrom and Hagglund, Ch. 2</a><br/><br/>
+
+                          <a href="http://planning.cs.uiuc.edu/node388.html">Lavalle Ch. 8.4</a><br/>
+                          Dudek & Jenkin 6.3.4<br/> 
+                          Optional: <a href="http://www.cs.cmu.edu/~motionplanning/lecture/Chap4-Potential-Field_howie.pdf">Howie Choset's notes</a><br/>
+                        </td>
                     </tr>
 	      
                     <tr>
                         <td>4</td>
-                        <td>Jan 17</td>
-                        <td>
-                            <b>Sensors and Actuators</b><br>
-                            Observation models for the following sensors: cameras, lasers, tactile, IMU, depth, GPS, Hall-effect, encoders, RGBD. Pulse-Width Modulation.
-                        </td>
-                        <td></td>
-                        <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture4_Sensors_and_Actuators.pdf">pdf</a>,
-                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture4_Sensors_and_Actuators.pptx">pptx</a></td>
-                        <td>Dudek & Jenkin 3.1.1,4, 3.2-3, 4.1-8, 4.10, 5.1.1<br/>
-                          Optional: <a href="http://www.cim.mcgill.ca/%7Elanger/558/1-imageprojection.pdf">Mike Langer's notes</a><br/>
-                        </td>
-                    </tr>
-	      
-                    <tr>
-                        <td>5</td>
-                        <td>Jan 19</td>
-                        <td>
-                          <b>PID Control</b><br>
-                          Tuning, cascading PID, advantages and drawbacks.
-                            
-                        </td>
-                        <td><a href="./tutorials/LinearAlgebraRefresher.pdf">Linear algebra refresher</a></td>
-                        <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture5_PID_Control.pdf">pdf</a>,
-                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture5_PID_Control.pptx">pptx</a></td>
-                        <td>Optional: <a href="https://www.amazon.com/Automatic-Tuning-Controllers-Karl-Astrom/dp/1556170815">Astrom and Hagglund, Ch. 2</a></td>
-                    </tr>
- 
-	            <tr>
-                        <td>6</td>
-                        <td>Jan 24</td>
-                        <td>
-                          <b>Artificial Potential Fields and Obstacle Avoidance</b><br>
-                          Implementation issues, navigation functions. Vector-field histogram (VFH), dynamic window approach (DWA).
-                        </td>
-                        <td></td>
-                        <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture6_Potential_Fields_And_Obstacle_Avoidance.pdf">pdf</a>,
-                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture6_Potential_Fields_And_Obstacle_Avoidance.pptx">pptx</a></td>
-                        <td><a href="http://planning.cs.uiuc.edu/node388.html">Lavalle Ch. 8.4</a><br/>
-                            Dudek & Jenkin 6.3.4<br/> 
-                            Optional: <a href="http://www.cs.cmu.edu/~motionplanning/lecture/Chap4-Potential-Field_howie.pdf">Howie Choset's notes</a><br/>
-                            
-                        </td>
-                    </tr>
- 
-	            <tr>
-                        <td>7</td>
-                        <td>Jan 26</td>
+                        <td>Sep 26</td>
                         <td>
                           <b>Linear Quadratic Regulator (LQR)</b><br/>
                           Computing optimal actions for linear dynamical systems with quadratic cost-to-go functions.<br/>
-                          <a href="./quizzes/quiz1.pdf">Quiz 1 (Transformations and PID)</a>   
+                          <a href="./quizzes/quiz1.pdf">Quiz 1 (Transformations and PID)</a>
+                          <br/><br/>
                         </td>
                         <td>Probability refresher</td>
                         <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture7_Linear_Quadratic_Regulator.pdf">pdf</a>,
                           <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture7_Linear_Quadratic_Regulator.pptx">pptx</a>,
                           <a href="https://github.com/florianshkurti/comp417/tree/master/lqr_examples/python">code</a></td>
-                        <td>Optional: Stephen Boyd's LQR <a href="https://stanford.edu/class/ee363/lectures/dlqr.pdf">notes</a> and <a href="https://stanford.edu/class/ee103/lectures/control/control_slides.pdf">examples</a>.</td>
+                        <td>Optional: Stephen Boyd's LQR <a href="https://stanford.edu/class/ee363/lectures/dlqr.pdf">notes</a> and <a href="https://stanford.edu/class/ee103/lectures/control/control_slides.pdf">examples</a></td>
                     </tr>
-	             
+	      
                     <tr>
-                        <td>8</td>
-                        <td>Jan 31</td>
+                        <td>5</td>
+                        <td>Oct 3</td>
                         <td>
-                            <b>Planning</b><br>
-                            Dijkstra, A*
+                          <b>Planning</b><br>
+                          Dijkstra, A*, Rapidly-exploring Random Trees (RRT), Probabilistic RoadMaps (PRM)
+                        </td>
+                        <td>Intro to numpy, Implementing LQR</td>
+                        <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture8_Dijkstra_AStar.pdf">pdf</a>,
+                          <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture8_Dijkstra_AStar.pptx">pptx</a>
+                          
+                          <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture9_RRT_PRM.pdf">pdf</a>,
+                          <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture9_RRT_PRM.pptx">pptx</a>
+                        </td>
+                        <td><a href="http://theory.stanford.edu/~amitp/GameProgramming/AStarComparison.html">Blog post on A*</a><br/>
+                          <a href="https://www.udacity.com/course/artificial-intelligence-for-robotics--cs373">Udacity Lesson 4</a><br/>
+                          <a href="http://planning.cs.uiuc.edu/ch5.pdf">Lavalle 5.5, 5.6</a><br/>
+                        </td>
+                        
+                    </tr>
+ 
+	            <tr>
+                        <td>6</td>
+                        <td>Oct 10</td>
+                        <td>
+                          <b>Map Representations and Map Alignment</b><br>
+                          Occupancy grids, Octrees, Voronoi Graph, Homotopy Classes. Map alignment with known or unknown correspondences. Iterative Closest Point (ICP).<br/>
+                          <a href="./quizzes/quiz2.pdf">Quiz 2 (Potential fields and LQR)</a><br/><br/>
+                          <b>Occupancy Grid Mapping With Known Robot Poses</b><br>
+		          Log-odds ratio, Probabilistic dynamics and measurement models, Bayesian estimation. 
+                          
+                          <br/><br/>
+                        </td>
+                        <td>Function approximation with numpy</td>
+                        <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture10_Map_Representations_And_Alignment.pdf">pdf</a>,
+                          <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture10_Map_Representations_And_Alignment.pptx">pptx</a>
+                          <br/><br/><br/><br/>
+                          
+                          
+                          <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture11_Occupancy_Grid_Mapping_With_Known_Poses.pdf">pdf</a>,
+                          <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture11_Occupancy_Grid_Mapping_With_Known_Poses.pptx">pptx</a>
+                        </td>
+                        <td>
+                          <a href="https://people.eecs.berkeley.edu/~pabbeel/cs287-fa13/slides/ScanMatching.pdf">Pieter Abbeel's notes</a>
+                          <a href="https://people.eecs.berkeley.edu/~pabbeel/cs287-fa13/slides/MappingWithKnownPoses.pdf">Pieter Abbeel's notes</a><br/>
+                          Probabilistic Robotics Ch. 2 and Ch. 9
+                          
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td></td>
+                        <td>Oct 17</td>
+                        <td>
+                            <i>Reading week</i><br>
+		            <br/><br/><br/>
                         </td>
                         <td></td>
-                        <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture8_Dijkstra_AStar.pdf">pdf</a>,
-                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture8_Dijkstra_AStar.pptx">pptx</a></td>
-                        <td><a href="http://theory.stanford.edu/~amitp/GameProgramming/AStarComparison.html">Blog post on A*</a><br/>
-                            <a href="https://www.udacity.com/course/artificial-intelligence-for-robotics--cs373">Udacity Lesson 4</a>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                    
+                    
+	            <tr>
+                        <td>7</td>
+                        <td>Oct 24</td>
+                        <td>
+                          <b>Maximum Likelihood, Least Squares Estimation, Maximum A Posteriori Estimation</b><br>
+                          Least squares as a special case of maximum likelihood estimation on Gaussian models.<br><br>
+                          
+                          <b>GraphSLAM</b><br>
+		          Expectation and Covariance. Geometric interpretation of the covariance matrix. Nonlinear Least Squares formulation of the Simultaneous Localization And Mapping (SLAM) problem.<br/>
+                          <a href="./quizzes/quiz3.pdf">Quiz 3 (Map representations and Bayes' rule)</a> <br>
+
+                          <br/><br/>
+                        </td>
+                        <td>Demonstrating gMapping</td>
+                        <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture12_Least_Squares.pdf">pdf</a>,
+                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture12_Least_Squares.pptx">pptx</a>
+                            <br/><br/><br/>
+                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture13_GraphSLAM.pdf">pdf</a>,
+                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture13_GraphSLAM.pptx">pptx</a></td>
+                        <td><a href="https://www.udacity.com/course/artificial-intelligence-for-robotics--cs373">Udacity Lesson 6</a><br/>
+                          Probabilistic Robotics Ch. 11</td>
+                    </tr>
+
+                    <tr>
+                        <td>8</td>
+                        <td>Oct 31</td>
+                        <td>
+                          
+                          <b>Kalman Filter</b><br/>
+		          Bayes' rule on Gaussian distributions. Example of 1D Kalman Filter.<br/><br/>
+                          
+                          <b>Bayes' Filter and Kalman Filter</b><br/>
+		          Kalman Filter as a special case of Bayes' Filter. Examples of 2D and 4D Kalman Filter. General prediction and update equations.
+
+                          <br/><br/>
+                        </td>
+                        <td></td>
+                        <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture15_16_Kalman_Filter.pdf">pdf</a>,
+                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture15_16_Kalman_Filter.pptx">pptx</a>
+                        </td>
+                        <td><a href="https://www.udacity.com/course/artificial-intelligence-for-robotics--cs373">Udacity Lesson 2</a><br/>
+                          <a href="http://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/">Kalman Filter, Illustrated</a>,
+                          Probabilistic Robotics Ch. 2,3
                         </td>
                     </tr>
 	            
                     <tr>
                         <td>9</td>
-                        <td>Feb 2</td>
+                        <td>Nov 7</td>
                         <td>
-                          <b>Planning</b><br>
-                          Rapidly-exploring Random Trees (RRT), Probabilistic RoadMaps (PRM)
-                            
-                        </td>
-                        <td></td>
-                        <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture9_RRT_PRM.pdf">pdf</a>,
-                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture9_RRT_PRM.pptx">pptx</a></td>
-                        <td><a href="http://planning.cs.uiuc.edu/ch5.pdf">Lavalle 5.5, 5.6</a><br/></td>
-                    </tr>
-   
-                    <tr>
-                        <td>10</td>
-                        <td>Feb 7</td>
-                        <td>
-                            <b>Map Representations and Map Alignment</b><br>
-                            Occupancy grids, Octrees, Voronoi Graph, Homotopy Classes. Map alignment with known or unknown correspondences. Iterative Closest Point (ICP).<br/>
-                            <a href="./quizzes/quiz2.pdf">Quiz 2 (Potential fields and LQR)</a> 
-                        </td>
-                        <td></td>
-                        <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture10_Map_Representations_And_Alignment.pdf">pdf</a>,
-                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture10_Map_Representations_And_Alignment.pptx">pptx</a></td>
-                        <td><a href="https://people.eecs.berkeley.edu/~pabbeel/cs287-fa13/slides/ScanMatching.pdf">Pieter Abbeel's notes</td>
-                    </tr>
-     
-	            <tr>
-                        <td>11</td>
-                        <td>Feb 9</td>
-                        <td>
-                            <b>Occupancy Grid Mapping With Known Robot Poses</b><br>
-		            Log-odds ratio, Probabilistic dynamics and measurement models, Bayesian estimation. 
-                        </td>
-                        <td>Intro to numpy</td>
-                        <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture11_Occupancy_Grid_Mapping_With_Known_Poses.pdf">pdf</a>,
-                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture11_Occupancy_Grid_Mapping_With_Known_Poses.pptx">pptx</a></td>
-                        <td><a href="https://people.eecs.berkeley.edu/~pabbeel/cs287-fa13/slides/MappingWithKnownPoses.pdf">Pieter Abbeel's notes</a><br/>
-                            Probabilistic Robotics Ch. 2 and Ch. 9</td>
-                    </tr>
-     
-	            <tr>
-                        <td>12</td>
-                        <td>Feb 14</td>
-                        <td>
-                          <b>Maximum Likelihood, Least Squares Estimation, Maximum A Posteriori Estimation</b><br>
-                          Least squares as a special case of maximum likelihood estimation on Gaussian models.
-		           
-                        </td>
-                        <td></td>
-                        <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture12_Least_Squares.pdf">pdf</a>,
-                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture12_Least_Squares.pptx">pptx</a></td>
-                        <td>Optional: <a href="http://web4.cs.ucl.ac.uk/staff/s.prince/book/book.pdf">Simon Prince Ch.2 and Ch. 4<a/></td>
-                    </tr>
+                          
+                          <b>Extended Kalman Filter (EKF)</b><br/>
+		          Bayes' Filter and nonlinear transformations. Monte Carlo sampling vs. Linearization. EKF prediction and update equations.
+                          Examples: EKF Localization and EKF SLAM. <br/>                     
+                          <a href="./quizzes/quiz4.pdf">Quiz 4 (GraphSLAM and Gaussians)</a>
 
-                    <tr>
-                        <td>13</td>
-                        <td>Feb 16</td>
-                        <td>
-                            <b>GraphSLAM</b><br>
-		            Expectation and Covariance. Geometric interpretation of the covariance matrix. Nonlinear Least Squares formulation of the Simultaneous Localization And Mapping (SLAM) problem.<br/>
-                            <a href="./quizzes/quiz3.pdf">Quiz 3 (Map representations and Bayes' rule)</a> 
-                        </td>
-                        <td></td>
-                        <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture13_GraphSLAM.pdf">pdf</a>,
-                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture13_GraphSLAM.pptx">pptx</a></td>
-                        <td><a href="https://www.udacity.com/course/artificial-intelligence-for-robotics--cs373">Udacity Lesson 6</a><br/>
-                            Probabilistic Robotics Ch. 11  
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>14</td>
-                        <td>Feb 21</td>
-                        <td>
-                            <b>Midterm</b><br>
-		           
-                        </td>
-                        <td>Midterm review session</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-
-
-                    <tr>
-                        <td>15</td>
-                        <td>Feb 23</td>
-                        <td>
-                            <b>Kalman Filter</b><br>
-		            Bayes' rule on Gaussian distributions. Example of 1D Kalman Filter.
-                        </td>
-                        <td></td>
-                        <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture15_16_Kalman_Filter.pdf">pdf</a>,
-                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture15_16_Kalman_Filter.pptx">pptx</a></td>
-                        <td><a href="https://www.udacity.com/course/artificial-intelligence-for-robotics--cs373">Udacity Lesson 2</a><br/>
-                            <a href="http://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/">Kalman Filter, Illustrated</a></br>
-                        </td>
-                    </tr>
-
-                    
-	            <tr>
-                        <td></td>
-                        <td>Feb 28</td>
-                        <td>
-                            <i>Reading week</i><br>
-		            
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-
-
-                    <tr>
-                        <td></td>
-                        <td>Mar 2</td>
-                        <td>
-                            <i>Reading week</i><br/>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-     
-                    <tr>
-                        <td>16</td>
-                        <td>Mar 7</td>
-                         <td>
-                            <b>Bayes' Filter and Kalman Filter</b><br>
-		            Kalman Filter as a special case of Bayes' Filter. Examples of 2D and 4D Kalman Filter. General prediction and update equations.  
-                        </td>
-                        <td></td>
-                        <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture15_16_Kalman_Filter.pdf">pdf</a>,
-                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture15_16_Kalman_Filter.pptx">pptx</a></td>
-                        <td>Probabilistic Robotics Ch. 2,3</td>
-                    </tr>
-
-                    <tr>
-                        <td>17</td>
-                        <td>Mar 9</td>
-                        <td>
-                            <b>Extended Kalman Filter (EKF)</b><br>
-		            Bayes' Filter and nonlinear transformations. Monte Carlo sampling vs. Linearization. EKF prediction and update equations.
-                            Examples: EKF Localization and EKF SLAM. <br/>                     
-                            <a href="./quizzes/quiz4.pdf">Quiz 4 (GraphSLAM and Gaussians)</a>
+                          <br/><br/>
+                          
                         </td>
                         <td><a href="https://github.com/florianshkurti/comp417/tree/master/filtering_examples/python">Basic Kalman Filter implementation</a></td>
                         <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture17_Extended_Kalman_Filter.pdf">pdf</a>,
                             <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture17_Extended_Kalman_Filter.pptx">pptx</a></td>
                         <td><a href="https://www.youtube.com/watch?v=DE6Jn2cB4J4">Cyrill Stachniss' intro to EKF</a><br/>
-                            <a href="https://www.youtube.com/watch?v=XeWG5D71gC0">Cyrill Stachniss' intro to EKF-SLAM </a><br/>
-                           Probabilistic Robotics Ch. 2,3</td>
+                          <a href="https://www.youtube.com/watch?v=XeWG5D71gC0">Cyrill Stachniss' intro to EKF-SLAM </a><br/>
+                          Probabilistic Robotics Ch. 2,3</td>
+                        
                     </tr>
-
+   
                     <tr>
-                        <td>18</td>
-                        <td>Mar 14</td>
+                        <td>10</td>
+                        <td>Nov 14</td>
                         <td>
-                            <b>Particle Filter</b><br>
-		            Representing multimodal distributions. Particle propagation and resampling. Pathologies of particle filter.
+
+                          <b>Particle Filter</b><br>
+		          Representing multimodal distributions. Particle propagation and resampling. Pathologies of particle filter.
+                          Importance Sampling. Examples: Markov localization in a known map. FastSLAM.
+
+                          <br/><br/>
                         </td>
+
                         <td></td>
                         <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture18_19_Particle_Filter.pdf">pdf</a>,
                             <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture18_19_Particle_Filter.pptx">pptx</a></td>
                         <td><a href="https://www.udacity.com/course/artificial-intelligence-for-robotics--cs373">Udacity Lesson 3</a><br/>
-                            
-                        </td>
+                          Optional: <a href="http://robots.stanford.edu/papers/thrun.pf-in-robotics-uai02.pdf">Thrun's paper on PF</a></td>
+                        
                     </tr>
-
-                    <tr>
-                        <td>19</td>
-                        <td>Mar 16</td>
-
+     
+	            <tr>
+                        <td>11</td>
+                        <td>Nov 21</td>
                         <td>
-                            <b>Particle Filter</b><br>
-		            Importance Sampling. Examples: Markov localization in a known map. FastSLAM.
-                        </td>
-                        <td></td>
-                        <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture18_19_Particle_Filter.pdf">pdf</a>,
-                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture18_19_Particle_Filter.pptx">pptx</a></td>
-                        <td>Optional: <a href="http://robots.stanford.edu/papers/thrun.pf-in-robotics-uai02.pdf">Thrun's paper on PF</a></td>
-                    </tr>
-
-                    <tr>
-                        <td>20</td>
-                        <td>Mar 21</td>
-                        <td>
-                            <b>Camera Optics and Multi-view Geometry</b><br>
-		            Pinhole cameras, lenses, perspective projection. Aperture, focal length, exposure time, depth-of-field. Structure from Motion. 
+                          <b>Camera Optics and Multi-view Geometry</b><br>
+		          Pinhole cameras, lenses, perspective projection. Aperture, focal length, exposure time, depth-of-field. Structure from Motion.  
                         </td>
                         <td></td>
                         <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture20_Camera_Geometry.pdf">pdf</a>,
                             <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture20_Camera_Geometry.pptx">pptx</a></td>
-                        <td>Optional: <a href="/lectures_Spring2017/11_Spring2017_CamerasAndOptics.pdf">James Tompkin's notes</a><br/>
-
-                        </td>
+                        <td>Optional: <a href="/lectures_Spring2017/11_Spring2017_CamerasAndOptics.pdf">James Tompkin's notes</a><br/></td>
+                        
                     </tr>
-
-                    <tr>
-                        <td>21</td>
-                        <td>Mar 23</td>
+     
+	            <tr>
+                        <td>12</td>
+                        <td>Nov 28</td>
                         <td>
-                            <b>Visual odometry and Visual SLAM</b><br>
-		            Epipolar constraints. Depth from stereo disparity for parallel cameras. Triangulation as a least-squares problem. Scale issues in visual odometry
-                            with a single camera. Visual SLAM vs. structure from motion.<br/> <a href="./quizzes/quiz5.pdf">Quiz 5 (KF/EKF)<a>
+                          <b>Visual odometry and Visual SLAM</b><br>
+		          Epipolar constraints. Depth from stereo disparity for parallel cameras. Triangulation as a least-squares problem. Scale issues in visual odometry
+                          with a single camera. Visual SLAM vs. structure from motion.<br/> <a href="./quizzes/quiz5.pdf">Quiz 5 (KF/EKF)<a>
+                          
                         </td>
                         <td></td>
                         <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture21_Visual_SLAM_and_Visual_Odometry.pdf">pdf</a>,
-                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture21_Visual_SLAM_and_Visual_Odometry.pptx">pptx</a></td>
+                          <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture21_Visual_SLAM_and_Visual_Odometry.pptx">pptx</a></td>
                         <td>Optional: James Tompkin's notes on <a href="http://cs.brown.edu/courses/cs143/lectures_Spring2017/12_Spring2017_StereoIntroduction.pdf">stereo</a> and
                           <a href="http://cs.brown.edu/courses/cs143/lectures_Spring2017/14_Spring2017_EpipolarGeometryAndStructureFromMotion.pdf">SfM</a>.<br/>
                           <a href="http://www.cs.toronto.edu/~fidler/slides/2017/CSC420/lecture12.pdf">Sanja Fidler's notes on depth from stereo</a>
                         </td>
                     </tr>
 
-                    <tr>
-                        <td>22</td>
-                        <td>Mar 28</td>
-                        <td>
-                            <b>Function Approximation</b><br>
-                            <b>Intro to Reinforcement Learning</b><br>
-		            Research highlights (non-examinable material). Model-free RL: policy gradient estimation and the cross-entropy method.  
-                        </td>
-                        <td>Markov Localization</td>
-                        <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture22_Function_Approximation.pdf">pdf</a>, <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture22_Function_Approximation.pptx">pptx</a><br/><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture23_Reinforcement_Learning.pdf">pdf</a>, <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture23_Reinforcement_Learning.pptx">pptx</a></td>
-                        <td>Optional: <a href="https://people.eecs.berkeley.edu/~pabbeel/cs287-fa15/slides/lecture19-policy-gradients.pdf">Pieter Abbeel's policy optimization notes</a></td>
-                    </tr>
+                    
 
                     <tr>
-                        <td>23</td>
-                        <td>Mar 31</td>
+                      <td>13</td>
+                        <td>Dec 5-6</td>
                         <td>
-                            <b>Intro to Reinforcement Learning (invited talk by <a href="http://www.cim.mcgill.ca/~gamboa/">Juan Camilo Gamboa Higuera</a>)</b><br>
-		            Research highlights (non-examinable material). Model-based reinforcement learning. Learning to swim on the Aqua robot.     
-                        </td>
-                        <td></td>
-                        <td><a href="">pdf</a>, <a href="">pptx</a></td>
-                        <td></td>
-                    </tr>
-
-                    <tr>
-                        <td>24</td>
-                        <td>Apr 4</td>
-                        <td>
-                            <b>Intro to Human-Robot Interaction (invited talk by <a href="http://www.cim.mcgill.ca/~anqixu/">Anqi Xu</a>)</b><br>
-		            Research highlights (non-examinable material). Modeling human trust, and trust-aware control. 
-                        </td>
-                        <td>Assignment 4 Discussion</td>
-                        <td><a href="">pdf</a>, <a href="">pptx</a></td>
-                        <td></td>
-                    </tr>
-
-                    <tr>
-                        <td>25</td>
-                        <td>Apr 6</td>
-                        <td>
-                            <b>Review session for final exam</b><br>
+                          <b>Study break, beginning of exams</b><br>
 		           
                         </td>
+                        <td>Review for final exam</td>
                         <td></td>
                         <td></td>
-                        <td></td>
-                    </tr>
-     
+                    </tr>     
 
                 </tbody>
             </table>
@@ -510,10 +415,10 @@
         <div class="ms">
         <h3>Assignments</h3>
         <ul>
-          <li><a href="https://github.com/florianshkurti/comp417/raw/master/wall_following_assignment/description/Assignment1.pdf">Wall following and intro to ROS</a> with starter code <a href="https://github.com/florianshkurti/comp417/tree/master/wall_following_assignment/python">here</a>. Due Feb 4.
-          <li><a href="https://github.com/florianshkurti/comp417/raw/master/path_planning_and_control_assignment/latex/Assignment2.pdf">A*, RRT, and LQR</a> with starter code <a href="https://github.com/florianshkurti/comp417/tree/master/path_planning_and_control_assignment/python">here</a>. Due Feb 18.
-          <li><a href="https://github.com/florianshkurti/comp417/raw/master/estimation_assignment/latex/A3.pdf">Occupancy grid mapping, least squares localization, and EKF</a> with starter code <a href="https://github.com/florianshkurti/comp417/tree/master/estimation_assignment/python">here</a>. Bonus question: GraphSLAM implementation. Due Mar 24.
-          <li><a href="https://github.com/florianshkurti/comp417/raw/master/estimation_and_vision_assignment/latex/A4.pdf">Depth from stereo disparity, Markov localization</a>. Starter code is <a href="https://github.com/florianshkurti/comp417/tree/master/estimation_and_vision_assignment/python">here</a>. Bonus question: GPU implementation of depth from disparity. Due Apr 10. 
+          <li><a href="https://github.com/florianshkurti/comp417/raw/master/wall_following_assignment/description/Assignment1.pdf">Wall following and intro to ROS</a> with starter code <a href="https://github.com/florianshkurti/comp417/tree/master/wall_following_assignment/python">here</a>. Due Sep 25.
+          <li><a href="https://github.com/florianshkurti/comp417/raw/master/path_planning_and_control_assignment/latex/Assignment2.pdf">A*, RRT, and LQR</a> with starter code <a href="https://github.com/florianshkurti/comp417/tree/master/path_planning_and_control_assignment/python">here</a>. Due Oct 11.
+          <li><a href="https://github.com/florianshkurti/comp417/raw/master/estimation_assignment/latex/A3.pdf">Occupancy grid mapping, least squares localization, and EKF</a> with starter code <a href="https://github.com/florianshkurti/comp417/tree/master/estimation_assignment/python">here</a>. Bonus question: GraphSLAM implementation. Due Oct 30.
+          <li><a href="https://github.com/florianshkurti/comp417/raw/master/estimation_and_vision_assignment/latex/A4.pdf">Depth from stereo disparity, Markov localization</a>. Starter code is <a href="https://github.com/florianshkurti/comp417/tree/master/estimation_and_vision_assignment/python">here</a>. Bonus question: GPU implementation of depth from disparity. Due Dec 4. 
         </ul>
         </div>
 
@@ -522,11 +427,9 @@
         <div class="ms">
         <h3>Marking scheme</h3>
         <ul>
-          <li>4 assignments worth 12.5% each = 50% 
-          <li>5 quizzes worth 1% each = 5%
-          <li>1 midterm exam worth 15%
+          <li>4 assignments worth 15% each = 60% 
+          <li>5 quizzes worth 1% each = 10%
           <li>1 final exam worth 30%
-          <li>The final exam grade can replace the midterm grade if it improves the student's final mark.    
         </ul>
         </div>
         
@@ -537,6 +440,8 @@
           <li>Probabilistic Robotics, by Thrun, Fox, and Burgard
           <li>Planning Algorithms, by Lavalle
           <li>Robotics, Vision, and Control, by Corke
+          <li>State Estimation for Robotics, by Barfoot
+          <li>Bayesian Filtering and Smoothing, by Sarkka
           <li>Introduction to Autonomous Mobile Robots, by Siegwart, Nourbakhsh, Scaramuzza
           <li>(Chapters 2 and 4 from) Computer Vision: Models, Learning, and Inference, by Prince   
         </ul>
