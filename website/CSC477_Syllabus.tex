@@ -1,0 +1,237 @@
+\documentclass[11pt, a4paper]{article}
+%\usepackage{geometry}
+\usepackage[inner=1.5cm,outer=1.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\pagestyle{empty}
+\usepackage{graphicx}
+\usepackage{fancyhdr, lastpage, bbding, pmboxdraw}
+\usepackage[usenames,dvipsnames]{color}
+\definecolor{darkblue}{rgb}{0,0,.6}
+\definecolor{darkred}{rgb}{.7,0,0}
+\definecolor{darkgreen}{rgb}{0,.6,0}
+\definecolor{red}{rgb}{.98,0,0}
+\usepackage[colorlinks,pagebackref,pdfusetitle,urlcolor=darkblue,citecolor=darkblue,linkcolor=darkred,bookmarksnumbered,plainpages=false]{hyperref}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\pagestyle{fancyplain}
+\fancyhf{}
+\lhead{ \fancyplain{}{CSC477: Introduction to Mobile Robotics} }
+%\chead{ \fancyplain{}{} }
+\rhead{ \fancyplain{}{Sept 5, 2019} }
+%\rfoot{\fancyplain{}{page \thepage\ of \pageref{LastPage}}}
+\fancyfoot[RO, LE] {page \thepage\ of \pageref{LastPage} }
+\thispagestyle{plain}
+
+%%%%%%%%%%%% LISTING %%%
+\usepackage{listings}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\usepackage{verbatim} % used to display code
+\usepackage{fancyvrb}
+\usepackage{acronym}
+\usepackage{amsthm}
+\VerbatimFootnotes % Required, otherwise verbatim does not work in footnotes!
+
+
+
+\definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
+\definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
+\definecolor{lightlightgray}{gray}{0.93}
+
+
+
+\lstset{
+  %language=bash,                          % Code langugage
+  basicstyle=\ttfamily,                   % Code font, Examples: \footnotesize, \ttfamily
+  keywordstyle=\color{OliveGreen},        % Keywords font ('*' = uppercase)
+  commentstyle=\color{gray},              % Comments font
+  numbers=left,                           % Line nums position
+  numberstyle=\tiny,                      % Line-numbers fonts
+  stepnumber=1,                           % Step between two line-numbers
+  numbersep=5pt,                          % How far are line-numbers from code
+  backgroundcolor=\color{lightlightgray}, % Choose background color
+  frame=none,                             % A frame around the code
+  tabsize=2,                              % Default tab size
+  captionpos=t,                           % Caption-position = bottom
+  breaklines=true,                        % Automatic line breaking?
+  breakatwhitespace=false,                % Automatic breaks only at whitespace?
+  showspaces=false,                       % Dont make spaces visible
+  showtabs=false,                         % Dont make tabls visible
+  columns=flexible,                       % Column format
+  morekeywords={__global__, __device__},  % CUDA specific keywords
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{center}
+  {\Large \textsc{CSC477 -- Introduction to Mobile Robotics}}
+\end{center}
+\begin{center}
+  Fall 2019, University of Toronto Mississauga
+\end{center}
+%\date{September 26, 2014}
+
+\begin{center}
+  \rule{6in}{0.4pt}
+  \begin{minipage}[t]{.75\textwidth}
+    \begin{tabular}{llcccll}
+      \textbf{Instructor:} & Florian Shkurti & &  \textbf{Lectures:} Thu 5-7pm, DH4001 & & \\
+      \textbf{} &  {florian@cs.toronto.edu} & &  \textbf{Office Hours:} Mon 3-4pm, DH3066 & &\\
+      \textbf{} \\
+      \textbf{TA:} &  {Nan Liang} & & \textbf{Tutorials:} Wed 1-2pm, DH2020 & &\\
+      \textbf{} &  {nan.liang@mail.utoronto.ca} & & \textbf{Office Hours:} TBA & &\\
+
+
+    \end{tabular}
+  \end{minipage}
+  \rule{6in}{0.4pt}
+\end{center}
+\vspace{.5cm}
+\setlength{\unitlength}{1in}
+\renewcommand{\arraystretch}{2}
+
+\noindent\textbf{Course Page:} \url{http://www.cs.toronto.edu/~florian/courses/csc477_fall19}
+
+\vskip.15in
+\noindent\textbf{Overview:} %\footnotemark
+This course provides an introduction to robotic systems from a computational
+perspective. A robot is regarded as an intelligent computer that can use sensors and act on the
+world. We will consider the definitional problems for robots and look at how they are being
+solved in practice and by the research community. The emphasis is on algorithms, inference
+mechanisms and behavior strategies, as opposed to electromechanical systems design. The
+course will broadly cover the following areas:
+
+\begin{itemize}
+\item \textit{Kinematics and Dynamics:} How can we model robotic systems using approximate
+  physical models that enable us to make predictions about how they move in response to
+  given commands?
+\item \textit{Feedback Control and Planning}: How can we compute the state-(in)dependent
+  commands that are required to bring a robotic system from its current state to a desired
+  state?
+\item \textit{Mapping}: How should we represent 3D maps? How can we weigh noisy measurements from sensors as well as the robot's known pose to build a map of the environment?
+\item \textit{State Estimation}: The state of the robot is not always directly measurable. How can we
+  determine the relative weighs of multiple sensor measurements in order to form an
+  estimate of the state?
+\item \textit{The Geometry of Computer Vision}: How can we model inputs from an RGB camera? How can we triangulate points seen from two cameras. How can we estimate the camera's position (and therefore the robot's) while it is moving in the environment?
+\end{itemize}
+
+\noindent\textbf{Learning Outcomes:} %\footnotemark
+This course aims to help students improve their probabilistic modeling skills and instill the idea that a robot that explicitly accounts for its uncertainty works better than a robot that does not.
+By the end of the course students will learn to be comfortable with high-dimensional probabilistic modelling, least squares optimization, as well as rigorous translation of robotics problems into optimization problems, as currently used in robotics research. Students will also get practical experience with state of the art robot middleware and simulators (e.g. ROS and Gazebo).
+
+\vskip.15in
+\noindent\textbf{Prerequisites:} %\footnotemark
+To answer the questions posed above, we will rely on concepts from linear algebra, optimization, and
+probabilistic reasoning, which are some of the pillars of modern AI systems. Tutorials will be
+provided by the teaching assistant to help students develop a solid grasp of
+this important background material. Algorithm implementation will be done mainly in Python and
+C++/C. If your software engineering background does not include these languages, please talk
+to the instructor as soon as possible. Students are also going to be introduced to the ROS
+(Robot Operating System) environment and set of interfaces, as well as to the Gazebo 3D
+simulation environment, which comprise the state-of-the art tools used by the robotics
+community today.\\
+
+\noindent Currently, the following are listed as prerequisites on the course timetable:\\
+Required: CSC209H5; CSC338H5; CSC373H5; MAT244H5; STA256H5\\
+Recommended: CSC375H5; CSC384H5; CSC411H5; MAT224H5/MAT240H5\\
+
+\noindent Many of these prerequisites were included quite conservatively during the creation of this course, and will be removed in its next offering. Students who do not meet all the prerequisites listed above are encouraged to get a waiver approved by the instructor.\\
+
+\noindent The following are the minimum prerequisites required to do well in CSC477:\\
+Required: CSC209H5; MAT224H5/MAT240H5; STA256H5 \\
+Recommended: MAT244H5; CSC384H5; CSC411H5 \\
+
+\noindent Note that familiarity with basic Linux commands, (e.g. using the terminal, using an editor)
+is assumed and required. If this is not the case for you, please contact the instructor as soon as possible.
+
+\vskip.15in
+\noindent\textbf{Main References:} %\footnotemark
+There is no required textbook for this course. Slides will be provided that will cover the material needed for the class. The following are optional, but recommended textbooks:
+
+\begin{itemize}
+\item Sebastian Thrun, Dieter Fox, Wolfram Burgard {\textit{Probabilistic Robotics}}.
+\item Steve Lavalle {\textit{Planning Algorithms}}.
+\item Gregory Dudek, Michael Jenkin {\textit{Computational Principles of Mobile Robotics, 2nd edition}}
+\item Peter Corke {\textit{Robotics, Vision, and Control}}
+\item Tim Barfoot {\textit{State Estimation for Robotics}}
+\item Simo Sarkka {\textit{Bayesian Filtering and Smoothing}}
+\end{itemize}
+
+\vskip.15in
+\noindent\textbf{Course Communications:} %\footnotemark
+\begin{itemize}
+\item The official discussion board for the course is Quercus \url{https://q.utoronto.ca}. Announcements will be posted there, too.
+\item Email the instructor or the TA with “CSC477” in the subject line. For emails addressed to the instructor expect a response within 3 days.
+\item You are welcome to provide anonymous feedback / suggestions for improvement any time during the semester: \url{https://www.surveymonkey.com/r/H8QH65F}
+\end{itemize}
+
+\vspace*{.15in}
+\noindent\textbf{Evaluation:}
+\begin{itemize}
+\item 5 assignments worth 15\% each = 60\%
+\item 5 out of 7 in-class quizzes worth 2\% each = 10\%
+\item 1 final exam worth 30\%
+\end{itemize}
+\noindent There will be 7 in-class quizzes throughout the semester. When computing
+your quiz grade we will take the best 5 out of 7. Each student will have 2 grace days throughout the semester for late assignment submissions. Late submissions that exceed those grace days will lose 33\% of their value for every late day beyond the allotted grace days. Late submissions that exceed three days of delay after the grace days have been used will unfortunately not be accepted. The official policy of the Registrar's Office at UTM regarding missed exams can be found here \url{https://www.utm.utoronto.ca/registrar/current-students/examinations}.
+
+% \footnotetext{Downloadable ebook versions are available on AeLP.}
+\vspace*{.15in}
+\newpage
+
+
+\noindent \textbf{Tentative Course Outline By Week:}
+\begin{center}
+  \begin{minipage}{5in}
+    \begin{flushleft}
+      %Chapter 1 \dotfill ~$\approx$ 3 days \\
+      \begin{enumerate}
+      \item Introduction, Sensors and Actuators
+      \item Kinematics, Dynamics
+      \item PID Control, Artificial Potential Fields
+      \item Linear Quadratic Regulator
+      \item Planning
+      \item Mapping
+      \item Reading Week
+      \item Least Squares, Graph-Based Simultaneous Localization and Mapping
+      \item Bayes and Kalman Filter
+      \item Extended Kalman Filter
+      \item Particle Filter
+      \item Camera Optics and 3D Geometry
+      \item Visual Odometry and Simultaneous Localization and Mapping
+      \end{enumerate}
+    \end{flushleft}
+  \end{minipage}
+\end{center}
+
+
+
+\vskip.15in
+\noindent\textbf{Important Due Dates (tentative):}
+\begin{center} \begin{minipage}{3.8in}
+    \begin{flushleft}
+      Assignment 1     \dotfill Oct 2, 2019, by 6pm EST\\
+      Assignment 2     \dotfill Oct 23, 2019, by 6pm EST\\
+      Assignment 3     \dotfill Nov 15 , 2019, by 6pm EST\\
+      Assignment 4     \dotfill Dec 4, 2019, by 6pm EST\\
+
+      In-Class Quiz 1     \dotfill Oct 3, 2019\\
+      In-Class Quiz 2     \dotfill Oct 10, 2019\\
+      In-Class Quiz 3     \dotfill Oct 31, 2019\\
+      In-Class Quiz 4     \dotfill Nov 7, 2019\\
+      In-Class Quiz 5     \dotfill Nov 14, 2019\\
+      In-Class Quiz 6     \dotfill Nov 21, 2019\\
+      In-Class Quiz 7     \dotfill Nov 28, 2019\\
+
+    \end{flushleft}
+  \end{minipage}
+\end{center}
+
+%\end{itemize}
+
+\vskip.15in
+\noindent\textbf{Class Attendance Policy:} Regular attendance and class participation with questions is essential. The delivery style will be interactive, with many opportunities for discussions in the the classroom. I hope and expect that you will be engaged and actively contribute to these discussions.
+
+%%%%%% THE END
+\end{document} 

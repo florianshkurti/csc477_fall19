@@ -25,11 +25,13 @@
 
     <div class="imgs">
       <div id="pic1">
-	<a href="http://www.roboticsconference.org/"><img  src="./pic1.png"></img></a>
+	<a href="http://www.roboticsconference.org/"><img  src="./pic1.png"></img></a><br/>
+        <small>Robotics: Science and Systems</small>
       </div>
 
       <div id="pic2">
-	<a href="https://mars.nasa.gov/mer/home/"><img src="./pic2.jpg"></img></a>
+	<a href="https://mars.nasa.gov/mer/home/"><img src="./pic2.jpg"></img></a><br/>
+        <small>Mars Exploration Rover</small>
       </div>	
     </div>
     
@@ -66,6 +68,9 @@
         <div class="ts">
         <div>Lectures: Thursdays, DH4001, UTM, 5-7pm</div>
         <div>Tutorials and Practicals: Wednesdays, DH2020, UTM, 1-2pm</div>
+        <div>Discussion board and announcements will take place on <a href="http://toolboxrenewal.utoronto.ca/">Quercus</a></div>
+        <div>Anonymous feedback form for <a href="https://www.surveymonkey.com/r/H8QH65F">suggested improvements</a></div>
+        <div><a href="./CSC477_Syllabus.pdf">Course Syllabus</a></div>
         </div>
 
         <div class="host">
@@ -106,8 +111,8 @@
                     <tr>
                         <th>Week</th>
                         <th>Date</th>
-                        <th>Topics</th>
-                        <th>Tutorial</th>
+                        <th>Lecture</th>
+                        <th>Tutorial/Practical</th>
                         <th>Slides</th>
                         <th>Reading</th>
                     </tr>
@@ -119,14 +124,14 @@
                         <td>
                           <b>Introduction</b><br/>
                           Motivation, logistics, rough description of assignments, sense-plan-act paradigm.<br/> 
-		          <a href="./CourseOutline.pdf">Syllabus</a>, <a href="./quizzes/quiz0.pdf">Quiz 0 (Introduction, Background, Expectations)</a><br/><br/>
+		          <a href="./CSC477_Syllabus.pdf">Syllabus</a>, <a href="./quizzes/quiz0.pdf">Quiz 0 (Introduction, Background, Expectations)</a><br/><br/>
 
                           <b>Sensors and Actuators</b><br>
                           Camera, LiDAR, tactile, IMU, depth, GPS, Hall-effect sensors, encoders, RGBD. Pulse-Width Modulation. Motors.
                           
                           <br/><br/>
                         </td>
-                        <td>No tutorial</td>
+                        <td>None</td>
                         <td><br/><br/><br/><br/><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture4_Sensors_and_Actuators.pdf">pdf</a>,
                             <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture4_Sensors_and_Actuators.pptx">pptx</a></td>
                         <td>Dudek & Jenkin 3.1.1,4, 3.2-3, 4.1-8, 4.10, 5.1.1<br/>
@@ -143,8 +148,8 @@
                           Dynamical systems and control. Examples: Dubins car, differential
                           drive car, unicycle, pendulum, cartpole, quadcopter. Holonomic vs. non-holonomic systems.<br><br>
 
-                          <b>Function Approximation</b><br>
-                          <br/><br/>
+                          <!--b>Function Approximation</b><br>
+                          <br/><br/-->
                         </td>
                         <td><a href="./tutorials/ROSintro.pdf">Intro to ROS</a></td>
                         <td><a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture2_Dynamics_and_Kinematics.pdf">pdf</a>,
@@ -154,8 +159,8 @@
                             <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture3_Dynamics_and_Kinematics.pptx">pptx</a>
                             <br/><br/>
                             
-                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture22_Function_Approximation.pdf">pdf</a>,
-                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture22_Function_Approximation.pptx">pptx</a>
+                            <!--a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture22_Function_Approximation.pdf">pdf</a>,
+                            <a href="https://github.com/florianshkurti/comp417/raw/master/slides/Lecture22_Function_Approximation.pptx">pptx</a-->
                         </td>
                         
                         <td class="rdg">
@@ -198,7 +203,7 @@
                         <td>
                           <b>Linear Quadratic Regulator (LQR)</b><br/>
                           Computing optimal actions for linear dynamical systems with quadratic cost-to-go functions.<br/>
-                          <a href="./quizzes/quiz1.pdf">Quiz 1 (Transformations and PID)</a>
+                          <!--a href="./quizzes/quiz1.pdf">Quiz 1 (Transformations and PID)</a-->
                           <br/><br/>
                         </td>
                         <td>Probability refresher</td>
@@ -235,7 +240,7 @@
                         <td>
                           <b>Map Representations and Map Alignment</b><br>
                           Occupancy grids, Octrees, Voronoi Graph, Homotopy Classes. Map alignment with known or unknown correspondences. Iterative Closest Point (ICP).<br/>
-                          <a href="./quizzes/quiz2.pdf">Quiz 2 (Potential fields and LQR)</a><br/><br/>
+                          <!--a href="./quizzes/quiz2.pdf">Quiz 2 (Potential fields and LQR)</a--><br/><br/>
                           <b>Occupancy Grid Mapping With Known Robot Poses</b><br>
 		          Log-odds ratio, Probabilistic dynamics and measurement models, Bayesian estimation. 
                           
@@ -281,8 +286,8 @@
                           Least squares as a special case of maximum likelihood estimation on Gaussian models.<br><br>
                           
                           <b>GraphSLAM</b><br>
-		          Expectation and Covariance. Geometric interpretation of the covariance matrix. Nonlinear Least Squares formulation of the Simultaneous Localization And Mapping (SLAM) problem.<br/>
-                          <a href="./quizzes/quiz3.pdf">Quiz 3 (Map representations and Bayes' rule)</a> <br>
+		          Expectation and Covariance. Geometric interpretation of the covariance matrix. Nonlinear Least Squares formulation of the Simultaneous Localization And Mapping (SLAM) problem.
+                          <!--a href="./quizzes/quiz3.pdf">Quiz 3 (Map representations and Bayes' rule)</a-->
 
                           <br/><br/>
                         </td>
@@ -327,7 +332,7 @@
                           <b>Extended Kalman Filter (EKF)</b><br/>
 		          Bayes' Filter and nonlinear transformations. Monte Carlo sampling vs. Linearization. EKF prediction and update equations.
                           Examples: EKF Localization and EKF SLAM. <br/>                     
-                          <a href="./quizzes/quiz4.pdf">Quiz 4 (GraphSLAM and Gaussians)</a>
+                          <!--a href="./quizzes/quiz4.pdf">Quiz 4 (GraphSLAM and Gaussians)</a-->
 
                           <br/><br/>
                           
@@ -381,7 +386,7 @@
                         <td>
                           <b>Visual odometry and Visual SLAM</b><br>
 		          Epipolar constraints. Depth from stereo disparity for parallel cameras. Triangulation as a least-squares problem. Scale issues in visual odometry
-                          with a single camera. Visual SLAM vs. structure from motion.<br/> <a href="./quizzes/quiz5.pdf">Quiz 5 (KF/EKF)<a>
+                          with a single camera. Visual SLAM vs. structure from motion.<br/> <!--a href="./quizzes/quiz5.pdf">Quiz 5 (KF/EKF)<a-->
                           
                         </td>
                         <td></td>
@@ -415,20 +420,20 @@
         <div class="ms">
         <h3>Assignments</h3>
         <ul>
-          <li><a href="https://github.com/florianshkurti/comp417/raw/master/wall_following_assignment/description/Assignment1.pdf">Wall following and intro to ROS</a> with starter code <a href="https://github.com/florianshkurti/comp417/tree/master/wall_following_assignment/python">here</a>. Due Sep 25.
-          <li><a href="https://github.com/florianshkurti/comp417/raw/master/path_planning_and_control_assignment/latex/Assignment2.pdf">A*, RRT, and LQR</a> with starter code <a href="https://github.com/florianshkurti/comp417/tree/master/path_planning_and_control_assignment/python">here</a>. Due Oct 11.
-          <li><a href="https://github.com/florianshkurti/comp417/raw/master/estimation_assignment/latex/A3.pdf">Occupancy grid mapping, least squares localization, and EKF</a> with starter code <a href="https://github.com/florianshkurti/comp417/tree/master/estimation_assignment/python">here</a>. Bonus question: GraphSLAM implementation. Due Oct 30.
-          <li><a href="https://github.com/florianshkurti/comp417/raw/master/estimation_and_vision_assignment/latex/A4.pdf">Depth from stereo disparity, Markov localization</a>. Starter code is <a href="https://github.com/florianshkurti/comp417/tree/master/estimation_and_vision_assignment/python">here</a>. Bonus question: GPU implementation of depth from disparity. Due Dec 4. 
+          <li>Assignment #1, to be posted here, due Oct 2, 6pm EST.
+          <li>Assignment #2, to be posted here, due Oct 23, 6pm EST.
+          <li>Assignment #3, to be posted here, due Nov 15, 6pm EST.
+          <li>Assignment #4, to be posted here, due Dec 4, 6pm EST. 
         </ul>
         </div>
-
+        
 
     
         <div class="ms">
         <h3>Marking scheme</h3>
         <ul>
           <li>4 assignments worth 15% each = 60% 
-          <li>5 quizzes worth 1% each = 10%
+          <li>5 (out of 7) quizzes worth 2% each = 10%
           <li>1 final exam worth 30%
         </ul>
         </div>
@@ -436,10 +441,10 @@
         <div class="rt">
         <h3>Recommended, but optional, textbooks</h3>
         <ul>
-          <li>Computational Principles of Mobile Robotics, 2nd edition, by Dudek and Jenkin
           <li>Probabilistic Robotics, by Thrun, Fox, and Burgard
           <li>Planning Algorithms, by Lavalle
           <li>Robotics, Vision, and Control, by Corke
+          <li>Computational Principles of Mobile Robotics, 2nd edition, by Dudek and Jenkin
           <li>State Estimation for Robotics, by Barfoot
           <li>Bayesian Filtering and Smoothing, by Sarkka
           <li>Introduction to Autonomous Mobile Robots, by Siegwart, Nourbakhsh, Scaramuzza
@@ -447,6 +452,21 @@
         </ul>
         </div>
 
+        <div class="rt">
+        <h3>Self-Driving RC Cars</h3>
+
+        We are in the process of incorporating 5 RC-cars with navigation sensors (Intel Realsense RGBD cameras, Hokuyo 2D LiDAR, IMU) and onboard computing (NVIDIA Jetson Xavier)
+        into the course assignments. We bought these cars from the <a href="https://www.jetsonhacks.com/racecar-j/">RACECAR/J team</a>, and we are currently assembling them. We will very likely
+        have them ready by the second half of the semester. Stay tuned! 
+        <br/><br/><br/><br/>
+
+        <iframe width="1223" height="688" src="https://www.youtube.com/embed/gaV5hb1b3no" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        
+        </div>
+
+        
+        
+        
         <div class="rc">
         <h3>Related courses</h3>
         <ul>
