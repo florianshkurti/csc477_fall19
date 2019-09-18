@@ -46,7 +46,7 @@ GazeboRosForce::GazeboRosForce()
 // Destructor
 GazeboRosForce::~GazeboRosForce()
 {
-  event::Events::DisconnectWorldUpdateBegin(this->update_connection_);
+  this->update_connection_.reset();
 
   // Custom Callback Queue
   this->queue_.clear();
@@ -63,7 +63,7 @@ void GazeboRosForce::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 {
   // Get the world name.
   this->world_ = _model->GetWorld();
-  
+
   // load parameters
   this->robot_namespace_ = "";
   if (_sdf->HasElement("robotNamespace"))
@@ -71,7 +71,7 @@ void GazeboRosForce::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 
   if (!_sdf->HasElement("bodyName"))
   {
-    ROS_FATAL("force plugin missing <bodyName>, cannot proceed");
+    ROS_FATAL_NAMED("force", "force plugin missing <bodyName>, cannot proceed");
     return;
   }
   else
@@ -80,13 +80,13 @@ void GazeboRosForce::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
   this->link_ = _model->GetLink(this->link_name_);
   if (!this->link_)
   {
-    ROS_FATAL("gazebo_ros_force plugin error: link named: %s does not exist\n",this->link_name_.c_str());
+    ROS_FATAL_NAMED("force", "gazebo_ros_force plugin error: link named: %s does not exist\n",this->link_name_.c_str());
     return;
   }
 
   if (!_sdf->HasElement("topicName"))
   {
-    ROS_FATAL("force plugin missing <topicName>, cannot proceed");
+    ROS_FATAL_NAMED("force", "force plugin missing <topicName>, cannot proceed");
     return;
   }
   else
@@ -96,7 +96,7 @@ void GazeboRosForce::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
   // Make sure the ROS node for Gazebo has already been initialized
   if (!ros::isInitialized())
   {
-    ROS_FATAL_STREAM("A ROS node for Gazebo has not been initialized, unable to load plugin. "
+    ROS_FATAL_STREAM_NAMED("force", "A ROS node for Gazebo has not been initialized, unable to load plugin. "
       << "Load the Gazebo system plugin 'libgazebo_ros_api_plugin.so' in the gazebo_ros package)");
     return;
   }
@@ -137,8 +137,8 @@ void GazeboRosForce::UpdateObjectForce(const geometry_msgs::Wrench::ConstPtr& _m
 void GazeboRosForce::UpdateChild()
 {
   this->lock_.lock();
-  math::Vector3 force(this->wrench_msg_.force.x,this->wrench_msg_.force.y,this->wrench_msg_.force.z);
-  math::Vector3 torque(this->wrench_msg_.torque.x,this->wrench_msg_.torque.y,this->wrench_msg_.torque.z);
+  ignition::math::Vector3d force(this->wrench_msg_.force.x,this->wrench_msg_.force.y,this->wrench_msg_.force.z);
+  ignition::math::Vector3d torque(this->wrench_msg_.torque.x,this->wrench_msg_.torque.y,this->wrench_msg_.torque.z);
   this->link_->AddForce(force);
   this->link_->AddTorque(torque);
   this->lock_.unlock();
