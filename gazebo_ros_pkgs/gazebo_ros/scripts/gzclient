@@ -1,9 +1,10 @@
 #!/bin/sh
-final="$@"
+[ -L ${0} ] && SCRIPT_DIR=$(readlink ${0}) || SCRIPT_DIR=${0}
+SCRIPT_DIR=$(dirname ${SCRIPT_DIR})
 
-# remove ros remapping arguments like "__name:=node_name"; otherwise, they'd 
-# be interpreted as a world name by gzserver, and it'd crash while loading it
-final=`echo "$final" | sed 's/[^ ]*:=[^ ]* \?//g'`
+. ${SCRIPT_DIR}/libcommon.sh
+
+final="$@"
 
 EXT=so
 if [ $(uname) = "Darwin" ]; then
@@ -16,6 +17,26 @@ then
     final="$final -g `catkin_find --first-only libgazebo_ros_paths_plugin.$EXT`"
 fi
 
-# Combine the commands
+# add ros api plugin if it does not already exist in the passed in arguments
+if [ `expr "$final" : ".*libgazebo_ros_api_plugin\.$EXT.*"` -eq 0 ]
+then
+    final="$final -g `catkin_find --first-only libgazebo_ros_api_plugin.$EXT`"
+fi
+
 setup_path=$(pkg-config --variable=prefix gazebo)/share/gazebo/
-. $setup_path/setup.sh && gzclient $final
+
+# source setup.sh, but keep local modifications to GAZEBO_MASTER_URI and GAZEBO_MODEL_DATABASE_URI
+desired_master_uri="$GAZEBO_MASTER_URI"
+desired_model_database_uri="$GAZEBO_MODEL_DATABASE_URI"
+. $setup_path/setup.sh
+if [ "$desired_master_uri" = "" ]; then
+	desired_master_uri="$GAZEBO_MASTER_URI"
+fi
+if [ "$desired_model_database_uri" = "" ]; then
+	desired_model_database_uri="$GAZEBO_MODEL_DATABASE_URI"
+fi
+
+final=$(relocate_remappings "${final}")
+
+# Combine the commands
+GAZEBO_MASTER_URI="$desired_master_uri" GAZEBO_MODEL_DATABASE_URI="$desired_model_database_uri" gzclient $final

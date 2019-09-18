@@ -32,6 +32,7 @@
 #include <sensor_msgs/PointCloud.h>
 #include <sensor_msgs/Image.h>
 #include <sensor_msgs/CameraInfo.h>
+#include <std_msgs/Empty.h>
 #include <std_msgs/Float64.h>
 #include <image_transport/image_transport.h>
 #include <camera_info_manager/camera_info_manager.h>
@@ -52,6 +53,7 @@
 namespace gazebo
 {
   class GazeboRosMultiCamera;
+  class GazeboRosTriggeredMultiCamera;
   class GazeboRosCameraUtils
   {
     /// \brief Constructor
@@ -120,7 +122,7 @@ namespace gazebo
 
     /// \brief tf prefix
     private: std::string tf_prefix_;
-    
+
     /// \brief ROS image topic name
     protected: std::string image_topic_name_;
 
@@ -154,6 +156,8 @@ namespace gazebo
     protected: double distortion_k3_;
     protected: double distortion_t1_;
     protected: double distortion_t2_;
+
+    protected: bool border_crop_;
 
     protected: boost::shared_ptr<camera_info_manager::CameraInfoManager> camera_info_manager_;
 
@@ -205,10 +209,22 @@ namespace gazebo
     private: boost::thread deferred_load_thread_;
     private: event::EventT<void()> load_event_;
 
+    // make a trigger function that the child classes can override
+    // and a function that returns bool to indicate whether the trigger
+    // should be used
+    protected: virtual void TriggerCamera();
+    protected: virtual bool CanTriggerCamera();
+    private: void TriggerCameraInternal(const std_msgs::Empty::ConstPtr &dummy);
+    private: ros::Subscriber trigger_subscriber_;
+
+    /// \brief ROS trigger topic name
+    protected: std::string trigger_topic_name_;
+
     /// \brief True if camera util is initialized
     protected: bool initialized_;
 
     friend class GazeboRosMultiCamera;
+    friend class GazeboRosTriggeredMultiCamera;
   };
 }
 #endif
