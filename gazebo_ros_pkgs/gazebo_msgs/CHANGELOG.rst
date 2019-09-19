@@ -2,10 +2,64 @@
 Changelog for package gazebo_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.5.4 (2016-04-27)
+2.5.19 (2019-06-04)
+-------------------
+
+2.5.18 (2019-01-23)
+-------------------
+* Merge remote-tracking branch 'upstream/kinetic-devel' into kinetic-devel
+  # Conflicts:
+  #	gazebo_ros_control/src/default_robot_hw_sim.cpp
+* Contributors: Jack Liu
+
+2.5.17 (2018-06-07)
+-------------------
+
+2.5.16 (2018-06-04)
+-------------------
+
+2.5.15 (2018-02-12)
+-------------------
+
+2.5.14 (2017-12-11)
+-------------------
+
+2.5.13 (2017-06-24)
+-------------------
+* Add catkin package(s) to provide the default version of Gazebo (`#571 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/571>`_)
+  * Added catkin package gazebo_dev which provides the cmake config of the installed Gazebo version
+* Contributors: Jose Luis Rivero
+
+2.5.12 (2017-04-25)
+-------------------
+
+2.5.11 (2017-04-18)
+-------------------
+* Changed the spawn model methods to spawn also lights. (`#511 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/511>`_)
+* Contributors: Alessandro Ambrosano
+
+2.5.10 (2017-03-03)
+-------------------
+
+2.5.9 (2017-02-20)
 ------------------
-* fix wrong dependencies
-* Contributors: Jose Luis Rivero, Steven Peters, Yuki Furuta
+* Removed all trailing whitespace
+* Contributors: Dave Coleman
+
+2.5.8 (2016-12-06)
+------------------
+
+2.5.7 (2016-06-10)
+------------------
+
+2.5.6 (2016-04-28)
+------------------
+
+2.5.5 (2016-04-27)
+------------------
+* merge indigo, jade to kinetic-devel
+* Update maintainer for Kinetic release
+* Contributors: Jose Luis Rivero, Steven Peters
 
 2.5.3 (2016-04-11)
 ------------------
