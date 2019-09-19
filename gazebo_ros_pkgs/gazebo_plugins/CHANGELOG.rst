@@ -2,170 +2,24 @@
 Changelog for package gazebo_plugins
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-2.5.19 (2019-06-04)
--------------------
-* Accept 0 and 1 as booleans to support URDF to SDF boolean conversion; establish function parity with melodic (`#928 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/928>`_)
-* Contributors: ampleh
-
-2.5.18 (2019-01-23)
--------------------
-* Corrected the typo 'ture' to 'true' (`#828 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/828>`_)
-* Add horizontal movement option (`#814 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/814>`_)
-  * add horizontal movement option
-  * address pr comments
-* Corrected depth camera plugin initialization (kinetic-devel)
-  (`#750 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/750>`)
-* Initialize depth_image_connect_count to 0
-* Contributors: Daiki Maekawa, Jack Liu, Kevin Allen, Martin Ganeff, Veera Ragav
-
-2.5.17 (2018-06-07)
--------------------
-* gazebo_plugins: install triggered camera plugins (`#740 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/740>`_)
-  Fixes `#739 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/739>`_.
-* Contributors: Steven Peters
-
-2.5.16 (2018-06-04)
--------------------
-* Add publishOdomTF flag (`#692 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/692>`_) (`#716 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/716>`_)
-* ROS UTILS: prevent segfault when using alternative GazeboRos constructor (kinetic-devel) (`#721 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/721>`_)
-* Triggered camera / multicamera plugins (`#687 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/687>`_)
-* Fix sensors after time reset (`#683 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/683>`_)
-  World resets result in a negative time differences between current world
-  time and the last recorded sensor update time, preventing the plugin
-  from publishing new frames. This commit detects such events and resets
-  the internal sensor update timestamp.
-  * block_laser, range, and joint_state_publisher keep publishing after clock reset
-  * p3d keeps publishing after clock reset
-* Support 16-bit cameras (`#675 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/675>`_)
-  * extend camera util to support 16 bit rgb image encoding:  support 16 bit mono
-* Add warnings when the user is affected by gazebo not preserving world velocity when set positions (`#691 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/691>`_)
-  Issue `#612 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/612>`_. Workaround at https://github.com/mintar/mimic_joint_gazebo_tutorial
-* Fix for preserving world velocity when set positions for Gazebo9: `#612 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/612>`_
-  This commit fixes `#612 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/612>`_, but only for Gazebo9.
-  Fixing it for Gazebo7 (the version used in ROS Kinetic) requires the
-  following PR to be backported to Gazebo 7 and 8:
-  https://bitbucket.org/osrf/gazebo/pull-requests/2814/fix-issue-2111-by-providing-options-to/diff
-* gazebo_plugins: unique names for distortion tests (`#685 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/685>`_)
-* Fix tests and compiler warnings on kinetic-devel `#678 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/678>`_
-* fix gazebo9 warnings by removing Set.*Accel calls
-* gazebo_plugins: don't use -r in tests
-* Contributors: Jose Luis Rivero, Julian Kooij, Kevin Allen, Martin Günther, Steven Peters, krzysztof-zurad
-
-2.5.15 (2018-02-12)
--------------------
-* Merge pull request `#669 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/669>`_ from ahcorde/kinetic-devel
-* Adding velocity to joint state publisher gazebo plugin
-* Fix last gazebo8 warnings! (`#658 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/658>`_)
-* Fix gazebo8 warnings part 10: ifdefs for GetModel, GetEntity, Light (`#656 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/656>`_)
-* gazebo8 warnings: ifdefs for Get.*Vel() (`#653 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/653>`_)
-* Fix gazebo8 warnings part 8: ifdef's for GetWorldPose (`#650 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/650>`_)
-* Fix gazebo8 warnings part 7: ifdef's for Joint::GetAngle and some cleanup (`#642 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/642>`_)
-* Contributors: Alejandro Hernández Cordero, Steven Peters
-
-2.5.14 (2017-12-11)
--------------------
-* for gazebo8+, call functions without Get (`#639 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/639>`_)
-* Fix gazebo8 warnings part 4: convert remaining local variables in plugins to ign-math (`#633 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/633>`_)
-* Fix gazebo8 warnings part 3: more ign-math in plugins (`#631 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/631>`_)
-* Fix gazebo8 warnings part 2: replace private member gazebo::math types with ignition (`#628 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/628>`_)
-* Replace Events::Disconnect* with pointer reset (`#623 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/623>`_)
-* Merge pull request `#542 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/542>`_ from davetcoleman/kinetic-gazebo7-only
-  Remove compiler directive flags for < GAZEBO 7
-* Contributors: Dave Coleman, Steven Peters
-
-2.5.13 (2017-06-24)
--------------------
-* Fix inverted height in block laser plugin (`#582 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/582>`_)
-* Allow disabling distorted camera border crop (and associated tests) (`#572 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/572>`_)
-* Add an IMU sensor plugin that inherits from SensorPlugin (`#363 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/363>`_)
-  * now the plugin works with multiple robots
-  * using GetParentName name instead of GetScopedName
-  * added comments to highlight the differents between GazeboRosImuSensor and GazeboRosIMU
-  * now the message header is properly handled, using bodyName parameter as frame_id
-  * added check on gazebo version
-  * added check for sensor null pointer
-  * changed deprecated functions for gazebo version >= 6
-  * fixed version check
-  * added missing sensor variable for LastUpdateTime() function call
-  * considering '/' included in the robotNamespace
-  * replaced "bodyFrame" with "frameName"
-* Less exciting console output (`#561 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/561>`_)
-* Add catkin package(s) to provide the default version of Gazebo (`#571 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/571>`_)
-  * gazebo_dev: added execution dependency gazebo
-* Contributors: Adam Allevato, Alessandro Settimi, Dave Coleman, Jose Luis Rivero, Shohei Fujii
-
-2.5.12 (2017-04-25)
--------------------
-* Revert catkin warning fix (`#567 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/567>`_)
-  Many regressions in third party software (see https://github.com/yujinrobot/kobuki_desktop/issues/50)
-* Contributors: Jose Luis Rivero
-
-2.5.11 (2017-04-18)
--------------------
-* Change build system to set DEPEND on Gazebo/SDFormat (fix catkin warning)
-  Added missing DEPEND clauses to catkin_package to fix gazebo catkin warning.
-  Note that after the change problems could appear related to -lpthreads
-  errors. This is an known issue related to catkin:
-  https://github.com/ros/catkin/issues/856
-
-* Fix: add gazebo_ros_range to catkin package libraries (`#558 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/558>`_)
-* Contributors: Christoph Rist, Dave Coleman
-
-2.5.10 (2017-03-03)
--------------------
-* Revert catkin warnings to fix regressions (problems with catkin -lpthreads errors)
-  For reference and reasons, please check:
-  https://discourse.ros.org/t/need-to-sync-new-release-of-rqt-topic-indigo-jade-kinetic/1410/4
-  * Revert "Fix gazebo catkin warning, cleanup CMakeLists (`#537 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/537>`_)"
-  This reverts commit 5a0305fcb97864b66bc2e587fc0564435b4f2034.
-  * Revert "Fix gazebo and sdformat catkin warnings"
-  This reverts commit 11f95d25dcd32faccd2401d45c722f7794c7542c.
-* Fix destructor of GazeboRosVideo (`#547 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/547>`_)
-* Less exciting console output (`#549 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/549>`_)
-* Fix SDF namespacing for Video Plugin (`#546 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/546>`_)
-* Contributors: Dave Coleman, Jose Luis Rivero
-
-2.5.9 (2017-02-20)
-------------------
-* Fix gazebo catkin warning, cleanup CMakeLists (`#537 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/537>`_)
-* Fix timestamp issues for rendering sensors (kinetic-devel)
-* Namespace console output (`#543 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/543>`_)
-* Adding depth camera world to use in test to make depth camera have right timestamp `#408 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/408>`_- appears to be working (though only looking at horizon) but getting these sdf errors:
-* `#408 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/408>`_ Make the multi camera timestamps current rather than outdated, also reuse the same update code
-* Fix merge with kinetic branch
-* `#408 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/408>`_ Making a test for multicamra that shows the timestamps are currently outdated, will fix them similar to how the regular camera was fixed.
-* Fix for issue `#408 <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/408>`_. The last measurement time is the time that gazebo generated the sensor data, so ought to be used. updateRate doesn't seem that useful.
-  The other cameras need similar fixes to have the proper timestamps.
-* Bugfix: duplicated tf prefix resolution
-* fill in child_frame_id of odom topic
-* Fix gazebo and sdformat catkin warnings
-* Contributors: Dave Coleman, Jose Luis Rivero, Kei Okada, Lucas Walter, Yuki Furuta
-
-2.5.8 (2016-12-06)
-------------------
-* Fix camera distortion coefficients order. Now {k1, k2, p1, p2, k3}
-* Added an interface to gazebo's harness plugin
-* Contributors: Enrique Fernandez, Steven Peters, Nate Koenig
-
-2.5.7 (2016-06-10)
+2.5.4 (2016-04-27)
 ------------------
 
-2.5.6 (2016-04-28)
-------------------
-* fix gazebo7 deprecation warnings on kinetic
-* Contributors: Steven Peters
-
-2.5.5 (2016-04-27)
-------------------
-* merge indigo, jade to kinetic-devel
-* Accept /world for the frameName parameter in gazebo_ros_p3d
-* Upgrade to gazebo 7 and remove deprecated driver_base dependency
-  * Upgrade to gazebo 7 and remove deprecated driver_base dependency
-  * disable gazebo_ros_control until dependencies are met
-  * Remove stray backslash
-* Update maintainer for Kinetic release
-* use HasElement in if condition
-* Contributors: Hugo Boyer, Jackie Kay, Jose Luis Rivero, Steven Peters, William Woodall, Yuki Furuta
+* Also accept "/world" as frameName parameter in gazebo_ros_p3d plugin 
+* IMU supports frameName 
+* Added missing link_directories() 
+* Publish organized point cloud from openni_kinect plugin 
+* Fix row_step of openni_kinect plugin 
+* Add rostest to accompany range plugin world 
+* Fix gazebo_ros_joint_pose_trajectory.cpp bug that caused simulated trajectories to run fast
+* hog: making only the hand of god link zero-g. this lets you use the hand of god on a single link in a gravity-affected model
+* gazebo_ros_joint_pose_trajectory.cpp BUG that caused simulated trajectories to run fast
+* diffdrive: add parameter legacyMode for not breaking old packages 
+  Left and right wheel are inverted - if you put in the real right wheel
+  in the previous state of the plugin the robot drives into the opposite direction.
+* Add vacuum gripper plugin
+* tricycle drive motorController debugged
+* Contributors: Benjamin Blumer, Christian Holl, Horatiu George Todoran, John Hsu, Jonathan Bohren, Jose Luis Rivero, Kentaro Wada, Steven Peters, Yuki Furuta
 
 2.5.3 (2016-04-11)
 ------------------

@@ -45,7 +45,6 @@ GZ_REGISTER_SENSOR_PLUGIN(GazeboRosDepthCamera)
 GazeboRosDepthCamera::GazeboRosDepthCamera()
 {
   this->point_cloud_connect_count_ = 0;
-  this->depth_image_connect_count_ = 0;
   this->depth_info_connect_count_ = 0;
   this->last_depth_image_camera_info_update_time_ = common::Time(0);
 }
@@ -65,7 +64,7 @@ void GazeboRosDepthCamera::Load(sensors::SensorPtr _parent, sdf::ElementPtr _sdf
   // Make sure the ROS node for Gazebo has already been initialized
   if (!ros::isInitialized())
   {
-    ROS_FATAL_STREAM_NAMED("depth_camera", "A ROS node for Gazebo has not been initialized, unable to load plugin. "
+    ROS_FATAL_STREAM("A ROS node for Gazebo has not been initialized, unable to load plugin. "
       << "Load the Gazebo system plugin 'libgazebo_ros_api_plugin.so' in the gazebo_ros package)");
     return;
   }
@@ -192,8 +191,7 @@ void GazeboRosDepthCamera::OnNewDepthFrame(const float *_image,
   if (!this->initialized_ || this->height_ <=0 || this->width_ <=0)
     return;
 
-  this->depth_sensor_update_time_ = this->parentSensor->LastMeasurementTime();
-
+  this->depth_sensor_update_time_ = this->parentSensor->LastUpdateTime();
   if (this->parentSensor->IsActive())
   {
     if (this->point_cloud_connect_count_ <= 0 &&
@@ -218,7 +216,6 @@ void GazeboRosDepthCamera::OnNewDepthFrame(const float *_image,
       // do this first so there's chance for sensor to run 1 frame after activate
       this->parentSensor->SetActive(true);
   }
-  PublishCameraInfo();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -230,8 +227,7 @@ void GazeboRosDepthCamera::OnNewRGBPointCloud(const float *_pcd,
   if (!this->initialized_ || this->height_ <=0 || this->width_ <=0)
     return;
 
-  this->depth_sensor_update_time_ = this->parentSensor->LastMeasurementTime();
-
+  this->depth_sensor_update_time_ = this->parentSensor->LastUpdateTime();
   if (!this->parentSensor->IsActive())
   {
     if (this->point_cloud_connect_count_ > 0)
@@ -296,8 +292,8 @@ void GazeboRosDepthCamera::OnNewImageFrame(const unsigned char *_image,
   if (!this->initialized_ || this->height_ <=0 || this->width_ <=0)
     return;
 
-  //ROS_ERROR_NAMED("depth_camera", "camera_ new frame %s %s",this->parentSensor_->GetName().c_str(),this->frame_name_.c_str());
-  this->sensor_update_time_ = this->parentSensor->LastMeasurementTime();
+  //ROS_ERROR("camera_ new frame %s %s",this->parentSensor_->GetName().c_str(),this->frame_name_.c_str());
+  this->sensor_update_time_ = this->parentSensor->LastUpdateTime();
 
   if (!this->parentSensor->IsActive())
   {
@@ -308,11 +304,7 @@ void GazeboRosDepthCamera::OnNewImageFrame(const unsigned char *_image,
   else
   {
     if ((*this->image_connect_count_) > 0)
-    {
       this->PutCameraData(_image);
-      // TODO(lucasw) publish camera info with depth image
-      // this->PublishCameraInfo(sensor_update_time);
-    }
   }
 }
 
@@ -488,18 +480,17 @@ bool GazeboRosDepthCamera::FillDepthImageHelper(
 
 void GazeboRosDepthCamera::PublishCameraInfo()
 {
-  ROS_DEBUG_NAMED("depth_camera", "publishing default camera info, then depth camera info");
+  ROS_DEBUG("publishing default camera info, then depth camera info");
   GazeboRosCameraUtils::PublishCameraInfo();
 
   if (this->depth_info_connect_count_ > 0)
   {
-    common::Time sensor_update_time = this->parentSensor_->LastMeasurementTime();
-
-    this->sensor_update_time_ = sensor_update_time;
-    if (sensor_update_time - this->last_depth_image_camera_info_update_time_ >= this->update_period_)
+    this->sensor_update_time_ = this->parentSensor_->LastUpdateTime();
+    common::Time cur_time = this->world_->GetSimTime();
+    if (cur_time - this->last_depth_image_camera_info_update_time_ >= this->update_period_)
     {
-      this->PublishCameraInfo(this->depth_image_camera_info_pub_);  // , sensor_update_time);
-      this->last_depth_image_camera_info_update_time_ = sensor_update_time;
+      this->PublishCameraInfo(this->depth_image_camera_info_pub_);
+      this->last_depth_image_camera_info_update_time_ = cur_time;
     }
   }
 }

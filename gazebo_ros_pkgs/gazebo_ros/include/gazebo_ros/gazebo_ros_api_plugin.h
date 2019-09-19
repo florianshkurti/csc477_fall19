@@ -50,7 +50,6 @@
 
 #include "gazebo_msgs/SpawnModel.h"
 #include "gazebo_msgs/DeleteModel.h"
-#include "gazebo_msgs/DeleteLight.h"
 
 #include "gazebo_msgs/ApplyBodyWrench.h"
 
@@ -72,9 +71,6 @@
 #include "gazebo_msgs/SetLinkProperties.h"
 #include "gazebo_msgs/SetLinkState.h"
 #include "gazebo_msgs/GetLinkState.h"
-
-#include "gazebo_msgs/GetLightProperties.h"
-#include "gazebo_msgs/SetLightProperties.h"
 
 // Topics
 #include "gazebo_msgs/ModelState.h"
@@ -112,13 +108,13 @@ public:
 
   /// \brief Destructor
   ~GazeboRosApiPlugin();
-
+  
   /// \bried Detect if sig-int shutdown signal is recieved
   void shutdownSignal();
 
   /// \brief Gazebo-inherited load function
-  ///
-  /// Called before Gazebo is loaded. Must not block.
+  /// 
+  /// Called before Gazebo is loaded. Must not block. 
   /// Capitalized per Gazebo cpp style guidelines
   /// \param _argc Number of command line arguments.
   /// \param _argv Array of command line arguments.
@@ -143,18 +139,16 @@ public:
   void onModelStatesDisconnect();
 
   /// \brief Function for inserting a URDF into Gazebo from ROS Service Call
-  bool spawnURDFModel(gazebo_msgs::SpawnModel::Request &req,
-                      gazebo_msgs::SpawnModel::Response &res);
+  bool spawnURDFModel(gazebo_msgs::SpawnModel::Request &req,gazebo_msgs::SpawnModel::Response &res);
+
+  /// \brief Function for inserting a URDF into Gazebo from ROS Service Call. Deprecated in ROS Hydro - replace with spawnURDFModel()
+  ROS_DEPRECATED bool spawnGazeboModel(gazebo_msgs::SpawnModel::Request &req,gazebo_msgs::SpawnModel::Response &res);
 
   /// \brief Both SDFs and converted URDFs get sent to this function for further manipulation from a ROS Service call
-  bool spawnSDFModel(gazebo_msgs::SpawnModel::Request &req,
-                     gazebo_msgs::SpawnModel::Response &res);
+  bool spawnSDFModel(gazebo_msgs::SpawnModel::Request &req,gazebo_msgs::SpawnModel::Response &res);
 
   /// \brief delete model given name
   bool deleteModel(gazebo_msgs::DeleteModel::Request &req,gazebo_msgs::DeleteModel::Response &res);
-
-  /// \brief delete a given light by name
-  bool deleteLight(gazebo_msgs::DeleteLight::Request &req,gazebo_msgs::DeleteLight::Response &res);
 
   /// \brief
   bool getModelState(gazebo_msgs::GetModelState::Request &req,gazebo_msgs::GetModelState::Response &res);
@@ -173,12 +167,6 @@ public:
 
   /// \brief
   bool getLinkState(gazebo_msgs::GetLinkState::Request &req,gazebo_msgs::GetLinkState::Response &res);
-
-  /// \brief
-  bool getLightProperties(gazebo_msgs::GetLightProperties::Request &req,gazebo_msgs::GetLightProperties::Response &res);
-
-  /// \brief
-  bool setLightProperties(gazebo_msgs::SetLightProperties::Request &req,gazebo_msgs::SetLightProperties::Response &res);
 
   /// \brief
   bool setLinkProperties(gazebo_msgs::SetLinkProperties::Request &req,gazebo_msgs::SetLinkProperties::Response &res);
@@ -255,32 +243,28 @@ private:
   void stripXmlDeclaration(std::string &model_xml);
 
   /// \brief Update the model name and pose of the SDF file before sending to Gazebo
-  void updateSDFAttributes(TiXmlDocument &gazebo_model_xml,
-                           const std::string &model_name,
-                           const ignition::math::Vector3d &initial_xyz,
-                           const ignition::math::Quaterniond &initial_q);
+  void updateSDFAttributes(TiXmlDocument &gazebo_model_xml, std::string model_name, 
+                           gazebo::math::Vector3 initial_xyz, gazebo::math::Quaternion initial_q);
 
   /// \brief Update the model pose of the URDF file before sending to Gazebo
-  void updateURDFModelPose(TiXmlDocument &gazebo_model_xml,
-                           const ignition::math::Vector3d &initial_xyz,
-                           const ignition::math::Quaterniond &initial_q);
+  void updateURDFModelPose(TiXmlDocument &gazebo_model_xml, 
+                           gazebo::math::Vector3 initial_xyz, gazebo::math::Quaternion initial_q);
 
   /// \brief Update the model name of the URDF file before sending to Gazebo
-  void updateURDFName(TiXmlDocument &gazebo_model_xml, const std::string &model_name);
+  void updateURDFName(TiXmlDocument &gazebo_model_xml, std::string model_name);
 
   /// \brief
-  void walkChildAddRobotNamespace(TiXmlNode* model_xml);
+  void walkChildAddRobotNamespace(TiXmlNode* robot_xml);
 
   /// \brief
-  bool spawnAndConform(TiXmlDocument &gazebo_model_xml, const std::string &model_name,
+  bool spawnAndConform(TiXmlDocument &gazebo_model_xml, std::string model_name, 
                        gazebo_msgs::SpawnModel::Response &res);
 
   /// \brief helper function for applyBodyWrench
   ///        shift wrench from reference frame to target frame
-  void transformWrench(ignition::math::Vector3d &target_force, ignition::math::Vector3d &target_torque,
-                       const ignition::math::Vector3d &reference_force,
-                       const ignition::math::Vector3d &reference_torque,
-                       const ignition::math::Pose3d &target_to_reference );
+  void transformWrench(gazebo::math::Vector3 &target_force, gazebo::math::Vector3 &target_torque,
+                       gazebo::math::Vector3 reference_force, gazebo::math::Vector3 reference_torque,
+                       gazebo::math::Pose target_to_reference );
 
   /// \brief Used for the dynamic reconfigure callback function template
   void physicsReconfigureCallback(gazebo_ros::PhysicsConfig &config, uint32_t level);
@@ -301,16 +285,16 @@ private:
   void loadGazeboRosApiPlugin(std::string world_name);
 
   /// \brief convert xml to Pose
-  ignition::math::Pose3d parsePose(const std::string &str);
+  gazebo::math::Pose parsePose(const std::string &str);
 
   /// \brief convert xml to Pose
-  ignition::math::Vector3d parseVector3(const std::string &str);
+  gazebo::math::Vector3 parseVector3(const std::string &str);
 
   // track if the desconstructor event needs to occur
   bool plugin_loaded_;
 
   // detect if sigint event occurs
-  bool stop_;
+  bool stop_; 
   gazebo::event::ConnectionPtr sigint_event_;
 
   std::string robot_namespace_;
@@ -318,8 +302,6 @@ private:
   gazebo::transport::NodePtr gazebonode_;
   gazebo::transport::SubscriberPtr stat_sub_;
   gazebo::transport::PublisherPtr factory_pub_;
-  gazebo::transport::PublisherPtr factory_light_pub_;
-  gazebo::transport::PublisherPtr light_modify_pub_;
   gazebo::transport::PublisherPtr request_pub_;
   gazebo::transport::SubscriberPtr response_sub_;
 
@@ -335,18 +317,16 @@ private:
   gazebo::event::ConnectionPtr pub_model_states_event_;
   gazebo::event::ConnectionPtr load_gazebo_ros_api_plugin_event_;
 
+  ros::ServiceServer spawn_gazebo_model_service_; // DEPRECATED IN HYDRO
   ros::ServiceServer spawn_sdf_model_service_;
   ros::ServiceServer spawn_urdf_model_service_;
   ros::ServiceServer delete_model_service_;
-  ros::ServiceServer delete_light_service_;
   ros::ServiceServer get_model_state_service_;
   ros::ServiceServer get_model_properties_service_;
   ros::ServiceServer get_world_properties_service_;
   ros::ServiceServer get_joint_properties_service_;
   ros::ServiceServer get_link_properties_service_;
   ros::ServiceServer get_link_state_service_;
-  ros::ServiceServer get_light_properties_service_;
-  ros::ServiceServer set_light_properties_service_;
   ros::ServiceServer set_link_properties_service_;
   ros::ServiceServer set_physics_properties_service_;
   ros::ServiceServer get_physics_properties_service_;
@@ -393,8 +373,8 @@ private:
   {
   public:
     gazebo::physics::LinkPtr body;
-    ignition::math::Vector3d force;
-    ignition::math::Vector3d torque;
+    gazebo::math::Vector3 force;
+    gazebo::math::Vector3 torque;
     ros::Time start_time;
     ros::Duration duration;
   };
@@ -410,9 +390,9 @@ private:
 
   std::vector<GazeboRosApiPlugin::WrenchBodyJob*> wrench_body_jobs_;
   std::vector<GazeboRosApiPlugin::ForceJointJob*> force_joint_jobs_;
-
+  
   /// \brief index counters to count the accesses on models via GetModelState
-  std::map<std::string, unsigned int> access_count_get_model_state_;
+  std::map<std::string, unsigned int> access_count_get_model_state_; 
 };
 }
 #endif
