@@ -44,7 +44,7 @@ GazeboRosVacuumGripper::GazeboRosVacuumGripper()
 // Destructor
 GazeboRosVacuumGripper::~GazeboRosVacuumGripper()
 {
-  event::Events::DisconnectWorldUpdateBegin(update_connection_);
+  update_connection_.reset();
 
   // Custom Callback Queue
   queue_.clear();
@@ -59,7 +59,7 @@ GazeboRosVacuumGripper::~GazeboRosVacuumGripper()
 // Load the controller
 void GazeboRosVacuumGripper::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 {
-  ROS_INFO("Loading gazebo_ros_vacuum_gripper");
+  ROS_INFO_NAMED("vacuum_gripper", "Loading gazebo_ros_vacuum_gripper");
 
   // Set attached model;
   parent_ = _model;
@@ -74,7 +74,7 @@ void GazeboRosVacuumGripper::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf
 
   if (!_sdf->HasElement("bodyName"))
   {
-    ROS_FATAL("vacuum_gripper plugin missing <bodyName>, cannot proceed");
+    ROS_FATAL_NAMED("vacuum_gripper", "vacuum_gripper plugin missing <bodyName>, cannot proceed");
     return;
   }
   else
@@ -88,15 +88,15 @@ void GazeboRosVacuumGripper::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf
     for (size_t i = 0; i < links.size(); i++) {
       found += std::string(" ") + links[i]->GetName();
     }
-    ROS_FATAL("gazebo_ros_vacuum_gripper plugin error: link named: %s does not exist", link_name_.c_str());
-    ROS_FATAL("gazebo_ros_vacuum_gripper plugin error: You should check it exists and is not connected with fixed joint");
-    ROS_FATAL("gazebo_ros_vacuum_gripper plugin error: Found links are: %s", found.c_str());
+    ROS_FATAL_NAMED("vacuum_gripper", "gazebo_ros_vacuum_gripper plugin error: link named: %s does not exist", link_name_.c_str());
+    ROS_FATAL_NAMED("vacuum_gripper", "gazebo_ros_vacuum_gripper plugin error: You should check it exists and is not connected with fixed joint");
+    ROS_FATAL_NAMED("vacuum_gripper", "gazebo_ros_vacuum_gripper plugin error: Found links are: %s", found.c_str());
     return;
   }
 
   if (!_sdf->HasElement("topicName"))
   {
-    ROS_FATAL("vacuum_gripper plugin missing <serviceName>, cannot proceed");
+    ROS_FATAL_NAMED("vacuum_gripper", "vacuum_gripper plugin missing <serviceName>, cannot proceed");
     return;
   }
   else
@@ -105,7 +105,7 @@ void GazeboRosVacuumGripper::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf
   // Make sure the ROS node for Gazebo has already been initialized
   if (!ros::isInitialized())
   {
-    ROS_FATAL_STREAM("A ROS node for Gazebo has not been initialized, unable to load plugin. "
+    ROS_FATAL_STREAM_NAMED("vacuum_gripper", "A ROS node for Gazebo has not been initialized, unable to load plugin. "
       << "Load the Gazebo system plugin 'libgazebo_ros_api_plugin.so' in the gazebo_ros package)");
     return;
   }
@@ -141,17 +141,17 @@ void GazeboRosVacuumGripper::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf
   update_connection_ = event::Events::ConnectWorldUpdateBegin(
       boost::bind(&GazeboRosVacuumGripper::UpdateChild, this));
 
-  ROS_INFO("Loaded gazebo_ros_vacuum_gripper");
+  ROS_INFO_NAMED("vacuum_gripper", "Loaded gazebo_ros_vacuum_gripper");
 }
 
 bool GazeboRosVacuumGripper::OnServiceCallback(std_srvs::Empty::Request &req,
                                      std_srvs::Empty::Response &res)
 {
   if (status_) {
-    ROS_WARN("gazebo_ros_vacuum_gripper: already status is 'on'");
+    ROS_WARN_NAMED("vacuum_gripper", "gazebo_ros_vacuum_gripper: already status is 'on'");
   } else {
     status_ = true;
-    ROS_INFO("gazebo_ros_vacuum_gripper: status: off -> on");
+    ROS_INFO_NAMED("vacuum_gripper", "gazebo_ros_vacuum_gripper: status: off -> on");
   }
   return true;
 }
@@ -160,9 +160,9 @@ bool GazeboRosVacuumGripper::OffServiceCallback(std_srvs::Empty::Request &req,
 {
   if (status_) {
     status_ = false;
-    ROS_INFO("gazebo_ros_vacuum_gripper: status: on -> off");
+    ROS_INFO_NAMED("vacuum_gripper", "gazebo_ros_vacuum_gripper: status: on -> off");
   } else {
-    ROS_WARN("gazebo_ros_vacuum_gripper: already status is 'off'");
+    ROS_WARN_NAMED("vacuum_gripper", "gazebo_ros_vacuum_gripper: already status is 'off'");
   }
   return true;
 }
@@ -179,8 +179,13 @@ void GazeboRosVacuumGripper::UpdateChild()
   }
   // apply force
   lock_.lock();
-  math::Pose parent_pose = link_->GetWorldPose();
+#if GAZEBO_MAJOR_VERSION >= 8
+  ignition::math::Pose3d parent_pose = link_->WorldPose();
+  physics::Model_V models = world_->Models();
+#else
+  ignition::math::Pose3d parent_pose = link_->GetWorldPose().Ign();
   physics::Model_V models = world_->GetModels();
+#endif
   for (size_t i = 0; i < models.size(); i++) {
     if (models[i]->GetName() == link_->GetName() ||
         models[i]->GetName() == parent_->GetName())
@@ -189,25 +194,32 @@ void GazeboRosVacuumGripper::UpdateChild()
     }
     physics::Link_V links = models[i]->GetLinks();
     for (size_t j = 0; j < links.size(); j++) {
-      math::Pose link_pose = links[j]->GetWorldPose();
-      math::Pose diff = parent_pose - link_pose;
-      double norm = diff.pos.GetLength();
+#if GAZEBO_MAJOR_VERSION >= 8
+      ignition::math::Pose3d link_pose = links[j]->WorldPose();
+#else
+      ignition::math::Pose3d link_pose = links[j]->GetWorldPose().Ign();
+#endif
+      ignition::math::Pose3d diff = parent_pose - link_pose;
+      double norm = diff.Pos().Length();
       if (norm < 0.05) {
-        links[j]->SetLinearAccel(link_->GetWorldLinearAccel());
-        links[j]->SetAngularAccel(link_->GetWorldAngularAccel());
+#if GAZEBO_MAJOR_VERSION >= 8
+        links[j]->SetLinearVel(link_->WorldLinearVel());
+        links[j]->SetAngularVel(link_->WorldAngularVel());
+#else
         links[j]->SetLinearVel(link_->GetWorldLinearVel());
         links[j]->SetAngularVel(link_->GetWorldAngularVel());
+#endif
         double norm_force = 1 / norm;
         if (norm < 0.01) {
           // apply friction like force
           // TODO(unknown): should apply friction actually
-          link_pose.Set(parent_pose.pos, link_pose.rot);
+          link_pose.Set(parent_pose.Pos(), link_pose.Rot());
           links[j]->SetWorldPose(link_pose);
         }
         if (norm_force > 20) {
           norm_force = 20;  // max_force
         }
-        math::Vector3 force = norm_force * diff.pos.Normalize();
+        ignition::math::Vector3d force = norm_force * diff.Pos().Normalize();
         links[j]->AddForce(force);
         grasping_msg.data = true;
       }

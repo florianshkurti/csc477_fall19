@@ -106,7 +106,7 @@ void GazeboRosRange::Load(sensors::SensorPtr _parent, sdf::ElementPtr _sdf)
 
   if (!this->sdf->HasElement("frameName"))
   {
-    ROS_INFO("Range plugin missing <frameName>, defaults to /world");
+    ROS_INFO_NAMED("range", "Range plugin missing <frameName>, defaults to /world");
     this->frame_name_ = "/world";
   }
   else
@@ -114,7 +114,7 @@ void GazeboRosRange::Load(sensors::SensorPtr _parent, sdf::ElementPtr _sdf)
 
   if (!this->sdf->HasElement("topicName"))
   {
-    ROS_INFO("Range plugin missing <topicName>, defaults to /range");
+    ROS_INFO_NAMED("range", "Range plugin missing <topicName>, defaults to /range");
     this->topic_name_ = "/range";
   }
   else
@@ -122,7 +122,7 @@ void GazeboRosRange::Load(sensors::SensorPtr _parent, sdf::ElementPtr _sdf)
 
   if (!this->sdf->HasElement("radiation"))
   {
-      ROS_WARN("Range plugin missing <radiation>, defaults to ultrasound");
+      ROS_WARN_NAMED("range", "Range plugin missing <radiation>, defaults to ultrasound");
       this->radiation_ = "ultrasound";
 
   }
@@ -131,14 +131,14 @@ void GazeboRosRange::Load(sensors::SensorPtr _parent, sdf::ElementPtr _sdf)
 
   if (!this->sdf->HasElement("fov"))
   {
-      ROS_WARN("Range plugin missing <fov>, defaults to 0.05");
+      ROS_WARN_NAMED("range", "Range plugin missing <fov>, defaults to 0.05");
       this->fov_ = 0.05;
   }
   else
       this->fov_ = _sdf->GetElement("fov")->Get<double>();
   if (!this->sdf->HasElement("gaussianNoise"))
   {
-    ROS_INFO("Range plugin missing <gaussianNoise>, defaults to 0.0");
+    ROS_INFO_NAMED("range", "Range plugin missing <gaussianNoise>, defaults to 0.0");
     this->gaussian_noise_ = 0;
   }
   else
@@ -146,7 +146,7 @@ void GazeboRosRange::Load(sensors::SensorPtr _parent, sdf::ElementPtr _sdf)
 
   if (!this->sdf->HasElement("updateRate"))
   {
-    ROS_INFO("Range plugin missing <updateRate>, defaults to 0");
+    ROS_INFO_NAMED("range", "Range plugin missing <updateRate>, defaults to 0");
     this->update_rate_ = 0;
   }
   else
@@ -243,7 +243,17 @@ void GazeboRosRange::OnNewLaserScans()
 {
   if (this->topic_name_ != "")
   {
+#if GAZEBO_MAJOR_VERSION >= 8
+    common::Time cur_time = this->world_->SimTime();
+#else
     common::Time cur_time = this->world_->GetSimTime();
+#endif
+    if (cur_time < this->last_update_time_)
+    {
+        ROS_WARN_NAMED("range", "Negative sensor update time difference detected.");
+        this->last_update_time_ = cur_time;
+    }
+
     if (cur_time - this->last_update_time_ >= this->update_period_)
     {
       common::Time sensor_update_time =
@@ -254,7 +264,7 @@ void GazeboRosRange::OnNewLaserScans()
   }
   else
   {
-    ROS_INFO("gazebo_ros_range topic name not set");
+    ROS_INFO_NAMED("range", "gazebo_ros_range topic name not set");
   }
 }
 

@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <launch>
 
   <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
@@ -6,7 +7,8 @@
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="true"/>
-    <arg name="headless" value="false"/>
+    <arg name="headless" value="false"/> <!-- Inert - see gazebo_ros_pkgs issue #491 -->
+    <arg name="recording" value="false"/>
     <arg name="debug" value="false"/>
   </include>
 
