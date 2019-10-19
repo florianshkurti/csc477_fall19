@@ -1,0 +1,146 @@
+\documentclass[11pt, a4paper]{article}
+%\usepackage{geometry}
+\usepackage[inner=1.5cm,outer=1.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\pagestyle{empty}
+\usepackage{graphicx}
+\usepackage{fancyhdr, lastpage, bbding, pmboxdraw}
+\usepackage[usenames,dvipsnames]{color}
+\definecolor{darkblue}{rgb}{0,0,.6}
+\definecolor{darkred}{rgb}{.7,0,0}
+\definecolor{darkgreen}{rgb}{0,.6,0}
+\definecolor{red}{rgb}{.98,0,0}
+\usepackage[colorlinks,pagebackref,pdfusetitle,urlcolor=darkblue,citecolor=darkblue,linkcolor=darkred,bookmarksnumbered,plainpages=false]{hyperref}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\pagestyle{fancyplain}
+\fancyhf{}
+\lhead{ \fancyplain{}{CSC477: Introduction to Mobile Robotics - Assignment 2} }
+%\chead{ \fancyplain{}{} }
+%\rhead{ \fancyplain{}{Sept 25, 2019} }
+%\rfoot{\fancyplain{}{page \thepage\ of \pageref{LastPage}}}
+\fancyfoot[RO, LE] {page \thepage\ of \pageref{LastPage} }
+\thispagestyle{plain}
+
+%%%%%%%%%%%% LISTING %%%
+\usepackage{listings}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\usepackage{verbatim} % used to display code
+\usepackage{fancyvrb}
+\usepackage{acronym}
+\usepackage{amsthm}
+\VerbatimFootnotes % Required, otherwise verbatim does not work in footnotes!
+
+
+
+\definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
+\definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
+\definecolor{lightlightgray}{gray}{0.93}
+
+
+
+\lstset{
+%language=bash,                          % Code langugage
+basicstyle=\ttfamily,                   % Code font, Examples: \footnotesize, \ttfamily
+keywordstyle=\color{OliveGreen},        % Keywords font ('*' = uppercase)
+commentstyle=\color{gray},              % Comments font
+numbers=left,                           % Line nums position
+numberstyle=\tiny,                      % Line-numbers fonts
+stepnumber=1,                           % Step between two line-numbers
+numbersep=5pt,                          % How far are line-numbers from code
+backgroundcolor=\color{lightlightgray}, % Choose background color
+frame=none,                             % A frame around the code
+tabsize=2,                              % Default tab size
+captionpos=t,                           % Caption-position = bottom
+breaklines=true,                        % Automatic line breaking?
+breakatwhitespace=false,                % Automatic breaks only at whitespace?
+showspaces=false,                       % Dont make spaces visible
+showtabs=false,                         % Dont make tabls visible
+columns=flexible,                       % Column format
+morekeywords={__global__, __device__},  % CUDA specific keywords
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{center}
+{\Large \textsc{CSC477 -- Introduction To Mobile Robotics \\ assignment 2, 15 points  \\ due: Nov 1, 2019, at 6pm}}
+\end{center}
+%\begin{center}
+%Fall 2019, University of Toronto Mississauga
+%\end{center}
+%\date{September 26, 2014}
+
+\setlength{\unitlength}{1in}
+\renewcommand{\arraystretch}{2}
+
+\noindent\textbf{Course Page:} \url{http://www.cs.toronto.edu/~florian/courses/csc477_fall19}
+
+\vskip.15in
+\noindent\textbf{Overview:} %\footnotemark
+In this assignment you will implement path planning algorithms, such as A* and RRT. You will also formulate an LQR problem.
+
+
+\section{A* implementation (5pts)}
+Implement the A* algorithm for an omnidirectional robot on a 2D plane. You are given starter code that implements Dijkstra's algorithm in Python at the following repository: \url{https://github.com/florianshkurti/csc477_fall19}, under the directory 
+\path{path_planning_and_control_assignment/python}. You need to modify the function \path{plan()} in the file \path{astar_planner.py}.
+You can run this file as follows:
+\begin{verbatim}
+  cd path/to/repo/path_planning_and_control_assignment/python/
+  python astar_planner.py ../worlds/map.pkl
+\end{verbatim}
+
+\noindent What you need to submit: 3 images of paths produced by your planner. Use the same starting state that is currently provided, and 
+3 distinct destination states that are far from each other. Your images should be named \path{astar_result_[0|1|2]_firstname_lastname.png}
+Also, for each of the 3 destination states provided above, plot (a) an image of the visited states using Dijkstra's algorithm and (b) an image of the visited states using A*. Your images should be named \path{dijkstra_visited_[0|1|2]_firstname_lastname.png} and \path{astar_visited_[0|1|2]_firstname_lastname.png}. 
+
+
+\section{RRT implementation (5pts)}
+Implement the RRT algorithm for an omnidirectional robot on a 2D plane. You are given starter code
+that implements some of the RRT functionality. You need to modify multiple functions which are annotated with TODOs in 
+the file \path{rrt_planner.py}. Note that this version of the RRT is the simplest version to implement in the sense that we 
+are not requiring kd-tree-based nearest neighbor queries and complicated collision queries. We use occupancy grids to simplify 
+collision detection. Once you are done implementing the required functionality you can run this file as follows:
+\begin{verbatim}
+  cd path/to/repo/path_planning_and_control_assignment/python/
+  python rrt_planner.py ../worlds/map.pkl
+\end{verbatim}
+\noindent What you need to submit: 3 images of paths produced by your planner. Use the same starting state that is currently provided, and 
+3 distinct destination states that are far from each other. Your images should be named \path{rrt_result_[0|1|2]_firstname_lastname.png}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.4\textwidth]{rrt}
+  \end{center}
+  \caption{How the RRT planner will look like once you implement it}
+\end{figure}
+
+\section{LQR (5pts)}
+Recall the example of the double integrator system with friction, or curling stone, that we saw in class:
+\begin{equation}
+m\ddot{\textbf{p}} = \textbf{u}-\alpha \dot{\textbf{p}} \nonumber
+\end{equation}
+\noindent where $\alpha$ is the friction coefficient, $\textbf{p}$ is the 2D position vector of the stone, and $\textbf{u}$ is the external control applied to the stone. 
+You are given two curling stones of equal mass $m$. They start from different starting positions, with different starting velocities. You are tasked with finding an LQR 
+controller/policy that receives feedback on the joint state of the two curling stones and outputs command vectors $\textbf{u}_1$ and $\textbf{u}_2$ so that the two stones 
+end up very gently hitting each other and not bouncing away from each other. In other words, define a joint linear system 
+\begin{equation}
+  \textbf{x}_{t+1} = A\textbf{x}_t + B\textbf{u}_t
+\end{equation}
+\noindent and an instantaneous cost function
+\begin{equation}
+  g(\textbf{x}_t, \textbf{u}_t) = \textbf{x}^T_tQ\textbf{x}_t + \textbf{u}^T_tB\textbf{u}_t
+\end{equation}
+\noindent such that when the state $\textbf{x}_t$ stabilizes around $\textbf{0}$ the stones are touching each other and their individual velocities are also 
+stabilized around $\textbf{0}$.
+
+What you need to submit: a file called lqr.pdf with the definition of the matrices A, B, Q, R, as well as the steps you took to arrive at your formulation.    
+
+\section{How to submit}
+Similarly to assignment 1, you will submit all your work in a file called \path{path_planning_and_control_assignment.zip} which will contain
+your extensions to the provided starter code, as well as the six images and the pdf file. 
+
+
+%%%%%% THE END 
+\end{document} 
