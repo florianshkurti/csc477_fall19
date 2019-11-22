@@ -85,6 +85,13 @@ class HuskyMapper:
         self.min_laser_angle = None
 
         self.odometry = None
+
+
+        # baselink is a frame on the husky robot that corresponds roughly to its body center
+        # baselaser is a frame on the husky robot that corresponds to the base of the LiDAR sensor (the scanned points will be in this coordinate frame)
+        # map is the frame corresponding to the global frame of reference 
+
+        # You need to convert points from the baselaser frame to the map frame for this assignment
         
         self.q_map_baselink = None   # 4x1 quaternion from husky_1/baselink to map frame
         self.R_map_baselink = None   # 3x3 rotation matrix from husky_1/baselink to map frame

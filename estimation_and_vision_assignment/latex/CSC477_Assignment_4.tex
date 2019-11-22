@@ -1,0 +1,270 @@
+\documentclass[11pt, a4paper]{article}
+%\usepackage{geometry}
+\usepackage[inner=1.5cm,outer=1.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\pagestyle{empty}
+\usepackage{graphicx}
+\usepackage{fancyhdr, lastpage, bbding, pmboxdraw}
+\usepackage[usenames,dvipsnames]{color}
+\definecolor{darkblue}{rgb}{0,0,.6}
+\definecolor{darkred}{rgb}{.7,0,0}
+\definecolor{darkgreen}{rgb}{0,.6,0}
+\definecolor{red}{rgb}{.98,0,0}
+\usepackage[colorlinks,pagebackref,pdfusetitle,urlcolor=darkblue,citecolor=darkblue,linkcolor=darkred,bookmarksnumbered,plainpages=false]{hyperref}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\pagestyle{fancyplain}
+\fancyhf{}
+\lhead{ \fancyplain{}{CSC477: Introduction to Mobile Robotics - Assignment 4} }
+%\chead{ \fancyplain{}{} }
+%\rhead{ \fancyplain{}{Sept 25, 2019} }
+%\rfoot{\fancyplain{}{page \thepage\ of \pageref{LastPage}}}
+\fancyfoot[RO, LE] {page \thepage\ of \pageref{LastPage} }
+\thispagestyle{plain}
+
+%%%%%%%%%%%% LISTING %%%
+\usepackage{listings}
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\usepackage{verbatim} % used to display code
+\usepackage{fancyvrb}
+\usepackage{acronym}
+\usepackage{amsthm}
+\VerbatimFootnotes % Required, otherwise verbatim does not work in footnotes!
+
+
+
+\definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
+\definecolor{CadetBlue}{cmyk}{0.62,0.57,0.23,0}
+\definecolor{lightlightgray}{gray}{0.93}
+
+
+
+\lstset{
+%language=bash,                          % Code langugage
+basicstyle=\ttfamily,                   % Code font, Examples: \footnotesize, \ttfamily
+keywordstyle=\color{OliveGreen},        % Keywords font ('*' = uppercase)
+commentstyle=\color{gray},              % Comments font
+numbers=left,                           % Line nums position
+numberstyle=\tiny,                      % Line-numbers fonts
+stepnumber=1,                           % Step between two line-numbers
+numbersep=5pt,                          % How far are line-numbers from code
+backgroundcolor=\color{lightlightgray}, % Choose background color
+frame=none,                             % A frame around the code
+tabsize=2,                              % Default tab size
+captionpos=t,                           % Caption-position = bottom
+breaklines=true,                        % Automatic line breaking?
+breakatwhitespace=false,                % Automatic breaks only at whitespace?
+showspaces=false,                       % Dont make spaces visible
+showtabs=false,                         % Dont make tabls visible
+columns=flexible,                       % Column format
+morekeywords={__global__, __device__},  % CUDA specific keywords
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{center}
+{\Large \textsc{CSC477 -- Introduction To Mobile Robotics \\ assignment 4, 15 points  \\ due: Dec 4, 2019, at 6pm}}
+\end{center}
+%\begin{center}
+%Fall 2019, University of Toronto Mississauga
+%\end{center}
+%\date{September 26, 2014}
+
+\setlength{\unitlength}{1in}
+\renewcommand{\arraystretch}{2}
+
+\noindent\textbf{Course Page:} \url{http://www.cs.toronto.edu/~florian/courses/csc477_fall19}
+
+\vskip.15in
+\noindent\textbf{Overview:} %\footnotemark
+In this assignment you will implement a particle filter for Monte Carlo localization. You are also given the option of working on one of two possible bonus questions for an extra 3 points. The first bonus question is about computer vision, specifically about stereo depth estimation on a self-driving dataset. The second possible bonus question is about deploying your wall following code from assignment 1 on one of the self-driving racecars. You may only submit work for one bonus question.
+
+\section{Monte Carlo Localization (15 pts)}
+In this exercise you are going to implement Monte Carlo Localization (i.e. localization in a known occupancy grid map, using particle filters), as discussed in class. Your robot
+is going to start by being completely lost in the environment, so particles are going to be spread out uniformly at random in the known world. After many
+LiDAR measurements, the robot's pose is going to be constrained and the particles are going to converge to a small cluster. The main mechanism for survival of the fittest among particles will be: which particles are more likely to have generated the laser scans that the robot is observing?
+
+\begin{figure}[h!]
+  \begin{center}
+    \includegraphics[width=0.6\textwidth]{results/mcl_init}
+   \end{center}
+   \caption{Uniform initialization of particles in Monte Carlo Localization, within the boundaries of a workspace. Your task is to make the particles cluster around the robot, as it makes LiDAR measurements of the environment. The environment consists of the black square and circular-shaped obstacles, shown above.}
+   \label{fig:mcl_init}
+\end{figure}
+
+\subsection*{Starter code}
+Do \path{git}$\;$\path{pull} under your CSC477 repository to get the starter code. The functionality that you need to implement is marked using comments in the file 
+\path{estimation_and_vision_assignment/python/monte_carlo_localization_v2.py}. To run your code, \path{cd}$\;$\path{path/to/csc477_fall19/estimation_and_vision_assignment/} and 
+execute the following commands on three different terminals: 
+\newline
+
+  \path{rosbag} $\;$ \path{play} $\;$ \path{laser_controls_and_odometry.bag}
+  
+  \path{roslaunch} $\;$ \path{estimation_and_vision_assignment} $\;$ \path{monte_carlo_localization_v2.launch}
+  
+  \path{rosrun} $\;$ \path{rviz} $\;$ \path{rviz} 
+\newline
+\newline
+\noindent When rviz initializes, go to \path{File} $>$ \path{Open Config} and then load the configuration file in \path{estimation_and_vision_assignment/resources/comp417.rviz}
+which is going to start the visualization of laser scan messages, frames of reference, and particles. Save this configuration file as the default
+in your \path{/home/username/.rviz/default.rviz}, so you won't have to do this every time you restart rviz. What you will see initially, before the robot makes any measurements is Fig.~\ref{fig:mcl_init}:
+\noindent What you need to submit: in addition to your code, a video recording of the rviz visualization demonstrating your particles converging from beginning to end. Your video 
+should be named \path{mcl_firstname_lastname.mp4/avi/ogg}. 
+
+
+\section{BONUS QUESTION: Depth from stereo disparity (3 pts)}
+In this exercise you are going to solve the depth from stereo disparity problem that we discussed in class. You will be given pairs of stereo-rectified images from the 
+KITTI and Middlebury datasets, such as the ones outlined in Fig.~\ref{fig:kitti_stereo}. The KITTI dataset is one of the main ways to benchmark visual tasks that are of relevance to self-driving cars. Note, in the last two years there have been much larger, and more diverse datasets for self-driving, so KITTI is slowly becoming obsolete for some tasks. 
+The Middlebury dataset 
+
+%\footnote{\url{http://vision.middlebury.edu/stereo/data/scenes2014/}} 
+
+is one of the oldest computer vision benchmarking services out there, and has become
+very popular for its stereo evaluation suite. You are encouraged to explore these datasets to become aware of what they offer. In the meantime, we are going to use the following rectified stereo 
+image pairs for this assignment:
+\begin{figure}[h!]
+  \begin{center}
+    \includegraphics[width=0.45\textwidth]{stereo_images/images0/kitti_1_left}
+    \includegraphics[width=0.45\textwidth]{stereo_images/images1/kitti_1_right}
+  \end{center}
+\end{figure}  
+
+\begin{figure}[h!]
+  \begin{center}  
+    \includegraphics[width=0.45\textwidth]{stereo_images/images0/kitti_2_left}
+    \includegraphics[width=0.45\textwidth]{stereo_images/images1/kitti_2_right}
+\end{center}
+\end{figure}  
+    
+\begin{figure}[h!]
+  \begin{center}     
+    \includegraphics[width=0.45\textwidth]{stereo_images/images0/kitti_3_left}
+    \includegraphics[width=0.45\textwidth]{stereo_images/images1/kitti_3_right}
+\end{center}
+\end{figure}  
+
+\begin{figure}[h!]
+  \begin{center}         
+    \includegraphics[width=0.45\textwidth]{stereo_images/images0/kitti_4_left}
+    \includegraphics[width=0.45\textwidth]{stereo_images/images1/kitti_4_right}
+\end{center}
+\end{figure}  
+    
+ \begin{figure}[h!]
+  \begin{center}  
+    \includegraphics[width=0.45\textwidth]{stereo_images/images0/kitti_5_left}
+    \includegraphics[width=0.45\textwidth]{stereo_images/images1/kitti_5_right}
+\end{center}
+\end{figure}  
+
+    
+\begin{figure}[h!]
+  \begin{center}  
+    \includegraphics[width=0.45\textwidth]{stereo_images/images0/kitti_6_left}
+    \includegraphics[width=0.45\textwidth]{stereo_images/images1/kitti_6_right}
+\end{center}
+\end{figure}  
+    
+    
+\begin{figure}[h!]
+  \begin{center}    
+    \includegraphics[width=0.35\textwidth]{stereo_images/images0/middlebury_1_left}
+    \includegraphics[width=0.35\textwidth]{stereo_images/images1/middlebury_1_right}
+  \end{center} 
+  \caption{Stereo image pairs 1 to 6 are from the KITTI dataset. The baseline between the cameras is about 0.5 meters. The 7th image pair is from the Middlebury stereo dataset. The baseline is about 0.2 meters.}
+  \label{fig:kitti_stereo}
+\end{figure}
+\noindent For each of these image pairs you will compute the disparity map in pixels, using block matching along horizontal epipolar lines, as we saw in class. Note that this is definitely not the state-of-the-art
+algorithm for stereo disparity, and your implementation will most likely not run in real-time, but it is enough to get you thinking about the problem. 
+\newline
+\newline
+\noindent Given the stereo camera calibration and rectification parameters 
+you will compute the depth map in metric coordinates from the pixel disparity map. For example, these disparity maps have been obtained with patches of width 64 pixels, and the sum of squared differences as the distance 
+metric for matching patches along the horizontal epipolar lines. The most common options for a distance metric for comparing similarity between image patches are:
+\begin{itemize}
+ \item sum of absolute differences (SAD), $\sum_{i,j}|L_{ij} - R_{ij}|$, where L,R are the left and right patches being examined.
+ \item sum of squared differences (SSD), $\sum_{i,j}(L_{ij} - R_{ij})^2$
+ \item normalized cross-correlation (NCC), $\sum_{i,j} \frac{(L_{ij} - \mu_L)}{\sqrt{\sum_{ij}{L_{ij} - \mu_L}}} \frac{(R_{ij} - \mu_R)}{\sqrt{\sum_{ij}{R_{ij} - \mu_R}}}$
+\end{itemize}
+\noindent The expected results you should get look approximately like this: 
+\begin{figure}[h!]
+  \begin{center}
+    \includegraphics[width=0.45\textwidth]{results/kitti_1_disparity}
+    \includegraphics[width=0.45\textwidth]{results/kitti_1_depth}
+  \end{center}
+\end{figure}
+    
+\begin{figure}[h!]
+  \begin{center}
+    \includegraphics[width=0.45\textwidth]{results/kitti_2_disparity}
+    \includegraphics[width=0.45\textwidth]{results/kitti_2_depth}
+  \end{center}
+\end{figure}
+
+\begin{figure}[h!]
+  \begin{center}
+    \includegraphics[width=0.45\textwidth]{results/kitti_3_disparity}
+    \includegraphics[width=0.45\textwidth]{results/kitti_3_depth}
+  \end{center}
+\end{figure}
+
+\begin{figure}[h!]
+  \begin{center}
+    \includegraphics[width=0.45\textwidth]{results/kitti_4_disparity}
+    \includegraphics[width=0.45\textwidth]{results/kitti_4_depth}
+  \end{center}
+\end{figure}
+
+\begin{figure}[h!]
+  \begin{center}
+    \includegraphics[width=0.45\textwidth]{results/kitti_5_disparity}
+    \includegraphics[width=0.45\textwidth]{results/kitti_5_depth}
+  \end{center}
+\end{figure}
+
+\begin{figure}[h!]
+  \begin{center}
+    \includegraphics[width=0.45\textwidth]{results/kitti_6_disparity}
+    \includegraphics[width=0.45\textwidth]{results/kitti_6_depth}
+  \end{center}
+\end{figure}
+
+\begin{figure}[h!]
+  \begin{center}
+    \includegraphics[width=0.45\textwidth]{results/middlebury_1_disparity}
+    \includegraphics[width=0.45\textwidth]{results/middlebury_1_depth}
+  \end{center} 
+  \caption{Example disparity and depth maps for the image pairs presented above. No post-processing has been applied to the disparity maps to encourage smoothness.}
+  \label{fig:results}
+\end{figure}
+\subsection*{Starter code}
+\noindent You are given starter code in your CSC477 repository under \path{estimation_and_vision_assignment/python/stereo_disparity_map.py}. Do \path{git} $\;$ \path{pull} 
+from your CSC477 repository in order to receive it. The way to run this code is:
+\newline
+\newline
+\path{./stereo_disparity_map.py} $\;$ \path{../latex/stereo_images/images0/kitti_1_left.png} $\;$ \path{../latex/stereo_images/images1/kitti_1_right.png} $\;$ \path{../resources/kitti.yaml}
+\newline
+\newline
+\noindent and similarly for the motorbike photo:
+\path{./stereo_disparity_map.py} $\;$ \path{../latex/stereo_images/images0/middlebury_1_left.png} $\;$ \path{../latex/stereo_images/images1/middlebury_1_right.png} $\;$ \path{../resources/middlebury.yaml}
+\newline
+\newline
+\noindent The \path{.yaml} files contain rectification parameters and other parameters for the two datasets.
+\subsection*{What to submit}
+Your implementation of disparity and depth estimation in \path{estimation_and_vision_assignment/python/stereo_disparity_map.py} using sum of squared differences for matching. Also, the following 14 images: 
+7 disparity maps and 7 depth maps for each of the image pairs mentioned above. Your files should be named \path{kitti_[1-6]_disparity.png}, \path{kitti_[1-6]_depth.png}, \path{middlebury_1_disparity.png}, \path{middlebury_1_depth.png}
+
+\section{BONUS QUESTION: Deploying wall-following code from A1 on the racecars (3 pts)}
+You may work in groups of up to 3 people, each group sharing a single racecar. You need to redirect the Twist ROS messages that your assignment 1 code computed and published, to the appropriate \path{cmd_vel} topic on the ROS system on the racecar's computer. You also need to tweak the PID parameters so that they make the racecar follow the wall smoothly. If you choose to work on this problem your group will present the solution to the instructor and the TA in the hallways of Deerfield Hall or the North Building during a mutually agreed upon time on Dec 2,3, or 4. You will also need to submit a video showing your car smoothly following a wall for about 10-20 seconds. The name of the file should be \path{racecar_firstname1_lastname1_firstname2_lastname2_firstname3_lastname3.mp4/avi/ogg}  
+
+% \section{A note on indentation}
+% Please make sure your editor uses spaces instead of tab characters, otherwise your TAs will have a hard time reading your code on their editors, which might be different from yours.
+
+
+\section{How to submit}
+Submit all your work in a file called \path{estimation_and_vision_assignment.zip} that contains your extensions to the provided starter code, as well as the required files, as explained above. Submissions will be done on Quercus. 
+
+%%%%%% THE END 
+\end{document} 
